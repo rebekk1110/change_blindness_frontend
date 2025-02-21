@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GIS Survey</title>
+  <!-- Link to Leaflet CSS (if you choose Leaflet) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Basic styles */
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    #map { height: 500px; }
+    .container { padding: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GIS Survey</h1>
+    <p>Please observe the map below. Click the button if you notice a change.</p>
+    <div id="map"></div>
+    <button id="survey-btn">I noticed a change</button>
+  </div>
+  
+  <!-- Include Leaflet JS (or Mapbox GL JS if preferred) -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
