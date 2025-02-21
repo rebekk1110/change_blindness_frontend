@@ -4,89 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GIS Survey - Maps</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    .container { padding: 20px; }
-    #map { height: 400px; margin-bottom: 20px; }
-    .map-section { display: none; }
-    .map-section.active { display: block; }
-    button { padding: 10px 20px; margin: 5px; }
+    body { 
+      font-family: 'Roboto', sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2em auto;
+      background: #fff;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .map-section {
+      display: none;
+    }
+    .map-section.active {
+      display: block;
+    }
+    #map1, #map2, #map3 {
+      height: 400px;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn {
+      padding: 0.75em 1.5em;
+      background: #007bff;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0.5em;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
   </style>
-  <!-- Include Leaflet CSS for maps -->
+  <!-- Include Leaflet CSS for map rendering -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
+  <header>
+    <h1>GIS Survey - Map Questions</h1>
+  </header>
   <div class="container">
-    <h1>GIS Survey - Map Section</h1>
-    <!-- Three map sections -->
+    <!-- Map Section 1 -->
     <div id="section1" class="map-section active">
       <h2>Map 1</h2>
-      <div id="map1" class="map"></div>
-      <p>Question for Map 1: Did you notice the change?</p>
-      <button onclick="submitAnswer(1)">Submit Answer</button>
-      <button onclick="nextSection(1)">Next Map</button>
+      <div id="map1"></div>
+      <p>Question: Did you notice any changes on this map?</p>
+      <button class="btn" onclick="submitAnswer(1)">Submit Answer</button>
+      <button class="btn" onclick="nextSection(1)">Next Map</button>
     </div>
-
+    <!-- Map Section 2 -->
     <div id="section2" class="map-section">
       <h2>Map 2</h2>
-      <div id="map2" class="map"></div>
-      <p>Question for Map 2: How prominent was the change?</p>
-      <button onclick="submitAnswer(2)">Submit Answer</button>
-      <button onclick="nextSection(2)">Next Map</button>
+      <div id="map2"></div>
+      <p>Question: How prominent is the change?</p>
+      <button class="btn" onclick="submitAnswer(2)">Submit Answer</button>
+      <button class="btn" onclick="nextSection(2)">Next Map</button>
     </div>
-
+    <!-- Map Section 3 -->
     <div id="section3" class="map-section">
       <h2>Map 3</h2>
-      <div id="map3" class="map"></div>
-      <p>Question for Map 3: Was the change expected?</p>
-      <button onclick="submitAnswer(3)">Submit Answer</button>
-      <button onclick="finishSurvey()">Finish Survey</button>
+      <div id="map3"></div>
+      <p>Question: Was the change expected?</p>
+      <button class="btn" onclick="submitAnswer(3)">Submit Answer</button>
+      <button class="btn" onclick="finishSurvey()">Finish Survey</button>
     </div>
   </div>
 
   <!-- Include Leaflet JS for map rendering -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Initialize three maps (for demo, we'll use the same configuration for each)
+    // Initialize a map with Leaflet
     function initMap(divId) {
       const map = L.map(divId).setView([37.8, -96], 4);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '© OpenStreetMap'
+        attribution: '© OpenStreetMap contributors'
       }).addTo(map);
-      // Insert your animation or choropleth logic here
+      // You can add animations or additional layers here
       return map;
     }
-
+    // Initialize maps for each section
     const map1 = initMap('map1');
     const map2 = initMap('map2');
     const map3 = initMap('map3');
 
-    // Dummy function to simulate answer submission
+    // Function to submit an answer to your backend
     function submitAnswer(mapNumber) {
-      const data = {
-        user_id: 'anonymous', // Generate or get user ID if needed
-        response: 'Answer for Map ' + mapNumber,
-        timestamp: new Date().toISOString(),
-        map: mapNumber
-      };
+    const participant_id = localStorage.getItem('participant_id');
+    const data = {
+        participant_id: participant_id,
+        map: mapNumber,
+        response: 'Answer for Map ' + mapNumber, // Replace with actual user input if needed
+        timestamp: new Date().toISOString()
+    };
 
-      // Replace with your actual backend URL
-      fetch('https://your-backend-url.onrender.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(result => {
-        console.log('Response saved:', result);
-        alert('Your answer for Map ' + mapNumber + ' was submitted!');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error submitting answer for Map ' + mapNumber);
-      });
-    }
+      // Replace with your actual backend URL from Render
+      fetch('https://change-blindness-study.onrender.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Response saved:', result);
+            alert('Your answer for Map ' + mapNumber + ' was submitted.');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error submitting your answer for Map ' + mapNumber);
+        });
+        }
+
 
     // Function to show the next map section
     function nextSection(current) {
