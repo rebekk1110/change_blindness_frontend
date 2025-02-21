@@ -3,26 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GIS Survey</title>
-  <!-- Link to Leaflet CSS (if you choose Leaflet) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <title>GIS Survey - Consent</title>
   <style>
-    /* Basic styles */
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    #map { height: 500px; }
-    .container { padding: 20px; }
+    .modal {
+      display: block; /* initially show modal */
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 5px;
+    }
+    form { max-width: 500px; margin: 20px auto; }
+    label { display: block; margin: 10px 0 5px; }
+    input, select { width: 100%; padding: 8px; }
+    button { padding: 10px 20px; margin-top: 15px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>GIS Survey</h1>
-    <p>Please observe the map below. Click the button if you notice a change.</p>
-    <div id="map"></div>
-    <button id="survey-btn">I noticed a change</button>
+  <!-- Consent Modal -->
+  <div class="modal" id="consentModal">
+    <div class="modal-content">
+      <h2>Consent Agreement</h2>
+      <p>
+        By participating in this survey, you agree that your responses will be stored and used for research purposes.
+        Please answer truthfully. Note that the exercises may take some time.
+      </p>
+      <button id="agreeBtn">I Agree</button>
+    </div>
   </div>
-  
-  <!-- Include Leaflet JS (or Mapbox GL JS if preferred) -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="app.js"></script>
+
+  <!-- Demographic Form (hidden until consent is given) -->
+  <div id="demographics" style="display:none; padding: 20px;">
+    <h2>Tell Us About Yourself</h2>
+    <form id="demoForm">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">--Select--</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+        <option value="non-binary">Non-binary</option>
+        <option value="prefer-not-to-say">Prefer not to say</option>
+      </select>
+
+      <label for="education">Education Level:</label>
+      <select id="education" name="education" required>
+        <option value="">--Select--</option>
+        <option value="high-school">High School</option>
+        <option value="bachelor">Bachelor's Degree</option>
+        <option value="master">Master's Degree</option>
+        <option value="phd">PhD</option>
+      </select>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required min="1">
+
+      <label for="experience">Professional experience with maps:</label>
+      <select id="experience" name="experience" required>
+        <option value="">--Select--</option>
+        <option value="yes">Yes, I work with maps professionally</option>
+        <option value="no">No</option>
+      </select>
+
+      <button type="submit">Submit and Continue</button>
+    </form>
+  </div>
+
+  <script>
+    // When the user clicks "I Agree", hide the modal and show the form
+    document.getElementById('agreeBtn').addEventListener('click', function() {
+      document.getElementById('consentModal').style.display = 'none';
+      document.getElementById('demographics').style.display = 'block';
+    });
+
+    // Handle the demographic form submission
+    document.getElementById('demoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Here, you can optionally store demographic data via your API
+      // For now, we'll simply redirect to the maps page.
+      window.location.href = 'maps.html';
+    });
+  </script>
 </body>
 </html>

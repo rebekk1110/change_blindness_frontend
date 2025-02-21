@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GIS Survey - Maps</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .container { padding: 20px; }
+    #map { height: 400px; margin-bottom: 20px; }
+    .map-section { display: none; }
+    .map-section.active { display: block; }
+    button { padding: 10px 20px; margin: 5px; }
+  </style>
+  <!-- Include Leaflet CSS for maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>GIS Survey - Map Section</h1>
+    <!-- Three map sections -->
+    <div id="section1" class="map-section active">
+      <h2>Map 1</h2>
+      <div id="map1" class="map"></div>
+      <p>Question for Map 1: Did you notice the change?</p>
+      <button onclick="submitAnswer(1)">Submit Answer</button>
+      <button onclick="nextSection(1)">Next Map</button>
+    </div>
+
+    <div id="section2" class="map-section">
+      <h2>Map 2</h2>
+      <div id="map2" class="map"></div>
+      <p>Question for Map 2: How prominent was the change?</p>
+      <button onclick="submitAnswer(2)">Submit Answer</button>
+      <button onclick="nextSection(2)">Next Map</button>
+    </div>
+
+    <div id="section3" class="map-section">
+      <h2>Map 3</h2>
+      <div id="map3" class="map"></div>
+      <p>Question for Map 3: Was the change expected?</p>
+      <button onclick="submitAnswer(3)">Submit Answer</button>
+      <button onclick="finishSurvey()">Finish Survey</button>
+    </div>
+  </div>
+
+  <!-- Include Leaflet JS for map rendering -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize three maps (for demo, we'll use the same configuration for each)
+    function initMap(divId) {
+      const map = L.map(divId).setView([37.8, -96], 4);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+      }).addTo(map);
+      // Insert your animation or choropleth logic here
+      return map;
+    }
+
+    const map1 = initMap('map1');
+    const map2 = initMap('map2');
+    const map3 = initMap('map3');
+
+    // Dummy function to simulate answer submission
+    function submitAnswer(mapNumber) {
+      const data = {
+        user_id: 'anonymous', // Generate or get user ID if needed
+        response: 'Answer for Map ' + mapNumber,
+        timestamp: new Date().toISOString(),
+        map: mapNumber
+      };
+
+      // Replace with your actual backend URL
+      fetch('https://your-backend-url.onrender.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log('Response saved:', result);
+        alert('Your answer for Map ' + mapNumber + ' was submitted!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting answer for Map ' + mapNumber);
+      });
+    }
+
+    // Function to show the next map section
+    function nextSection(current) {
+      document.getElementById('section' + current).classList.remove('active');
+      const next = current + 1;
+      document.getElementById('section' + next).classList.add('active');
+    }
+
+    // Function to finish the survey and redirect to thank you page
+    function finishSurvey() {
+      window.location.href = 'thankyou.html';
+    }
+  </script>
+</body>
+</html>
