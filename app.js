@@ -36,7 +36,7 @@ document.getElementById('survey-btn').addEventListener('click', function() {
   };
 
   // Replace the URL below with your deployed backend URL on Render
-  fetch('https://your-backend-url.onrender.com/submit', {
+  fetch('https://change-blindness-study.onrender.com', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
