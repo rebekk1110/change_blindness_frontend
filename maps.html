@@ -31,6 +31,13 @@
     .map-section {
       display: none;
     }
+<<<<<<< HEAD
+=======
+    #map {
+    background: white; /* or any color you prefer */
+    height: 500px;
+     } 
+>>>>>>> 1cae413ff56040d3fdcd892812b190aeb3838a3e
     .map-section.active {
       display: block;
     }
@@ -71,7 +78,11 @@
   <div class="container">
     <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
+<<<<<<< HEAD
       <h2>Question 1: Low Complexity</h2>
+=======
+      <h2>Question 1: Low Complexity!--</h2>
+>>>>>>> 1cae413ff56040d3fdcd892812b190aeb3838a3e
       <!-- The map container for level 1 -->
       <div id="map" class="map"></div>
       <p>Did you notice a change on this map?</p>
@@ -227,6 +238,37 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+      let fileName = "";
+      if (level === 1) fileName = "map1.geojson";
+      else if (level === 2) fileName = "map2.geojson";
+      else if (level === 3) fileName = "map3.geojson";
+
+      const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
+      fetch(geoJsonURL)
+      .then(geojsonData => {
+      if (geojsonLayer) { geojsonLayer.remove(); }
+      currentMapLevel = level;
+      geojsonLayer = L.geoJSON(geojsonData, {
+        style: styleFeature,
+        onEachFeature: function(feature, layer) {
+          if (feature.properties && feature.properties.changing) {
+            changingLayer = layer;
+          }
+        }
+      }).addTo(map);
+      // Fit the map bounds to the GeoJSON features
+      map.fitBounds(geojsonLayer.getBounds());
+      mapLoadTime[level] = Date.now();
+    })
+    .catch(error => console.error('Error loading GeoJSON file:', error));
+    
+    // Initialize the Leaflet map in a single container.
+    // We use the same container for all sections.
+    map = L.map('map', {
+  // Optionally, disable zoom controls or other default controls
+    zoomControl: true,
+    attributionControl: false
+    }).setView([0, 0], 2); 
     // Initially load GeoJSON for level 1
     loadGeoJSONForLevel(1);
 
