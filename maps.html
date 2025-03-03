@@ -31,19 +31,13 @@
     .map-section {
       display: none;
     }
-
-    #map {
-    background: white; /* or any color you prefer */
-    height: 500px;
-     } 
     .map-section.active {
       display: block;
     }
-    .map {
-      height: 400px;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    /* We use a single map container with id "map" */
+    #map {
+      background: white;
+      height: 500px;
     }
     .btn {
       padding: 0.75em 1.5em;
@@ -54,7 +48,6 @@
       cursor: pointer;
       margin-top: 1em;
       font-size: 1em;
-      /* transition: background 0.3s; */
     }
     .btn:hover {
       background: #0056b3;
@@ -76,10 +69,9 @@
   <div class="container">
     <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
-
-      <h2>Question 1: Low Complexity!--</h2>
-      <!-- The map container for level 1 -->
-      <div id="map" class="map"></div>
+      <h2>Question 1: Low Complexity</h2>
+      <!-- Single map container used across all sections -->
+      <div id="map"></div>
       <p>Did you notice a change on this map?</p>
       <label><input type="radio" name="response1" value="Change" required> Change</label>
       <label><input type="radio" name="response1" value="No Change" required> No Change</label>
@@ -96,7 +88,7 @@
     <!-- Section 2: Medium Complexity -->
     <div id="section2" class="map-section">
       <h2>Question 2: Medium Complexity</h2>
-      <div id="map" class="map"></div>
+      <!-- The same map container ("map") will be reused -->
       <p>Did you notice a change on this map?</p>
       <label><input type="radio" name="response2" value="Change" required> Change</label>
       <label><input type="radio" name="response2" value="No Change" required> No Change</label>
@@ -113,7 +105,7 @@
     <!-- Section 3: High Complexity -->
     <div id="section3" class="map-section">
       <h2>Question 3: High Complexity</h2>
-      <div id="map" class="map"></div>
+      <!-- Reusing the same map container -->
       <p>Did you notice a change on this map?</p>
       <label><input type="radio" name="response3" value="Change" required> Change</label>
       <label><input type="radio" name="response3" value="No Change" required> No Change</label>
@@ -174,7 +166,6 @@
     // Style function for GeoJSON features
     function styleFeature(feature) {
       if (feature.properties && feature.properties.changing) {
-        // For the changing unit, use its currentColor or assign one if not set
         if (!feature.properties.currentColor) {
           feature.properties.currentColor = randomColor();
         }
@@ -198,19 +189,25 @@
       }
     }
 
-    // Function to load a GeoJSON file from the "change_blindness" folder based on map level
+    // Function to load a GeoJSON file for a given map level from an absolute URL
     function loadGeoJSONForLevel(level) {
       currentMapLevel = level;
-      // File names are assumed to be "map1.geojson", "map2.geojson", "map3.geojson"
-      const fileName = "map" + level + ".geojson";
-      fetch('change_blindness/' + fileName)
-        .then(response => response.json())
+      let fileName = "";
+      if (level === 1) fileName = "map1.geojson";
+      else if (level === 2) fileName = "map2.geojson";
+      else if (level === 3) fileName = "map3.geojson";
+      const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
+      fetch(geoJsonURL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
         .then(geojsonData => {
-          // Remove any existing GeoJSON layer
           if (geojsonLayer) {
             geojsonLayer.remove();
           }
-          // Add the GeoJSON layer with the defined style and capture the changing unit layer
           geojsonLayer = L.geoJSON(geojsonData, {
             style: styleFeature,
             onEachFeature: function(feature, layer) {
@@ -219,56 +216,30 @@
               }
             }
           }).addTo(map);
-          // Record the map load time for reaction time measurement
+          // Fit the map bounds to the GeoJSON features
+          map.fitBounds(geojsonLayer.getBounds());
           mapLoadTime[level] = Date.now();
         })
         .catch(error => console.error('Error loading GeoJSON file:', error));
     }
 
-    // We use the same container for all sections.
-      let fileName = "";
-      if (level === 1) fileName = "map1.geojson";
-      else if (level === 2) fileName = "map2.geojson";
-      else if (level === 3) fileName = "map3.geojson";
-
-      const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
-      fetch(geoJsonURL)
-      .then(geojsonData => {
-      if (geojsonLayer) { geojsonLayer.remove(); }
-      currentMapLevel = level;
-      geojsonLayer = L.geoJSON(geojsonData, {
-        style: styleFeature,
-        onEachFeature: function(feature, layer) {
-          if (feature.properties && feature.properties.changing) {
-            changingLayer = layer;
-          }
-        }
-      }).addTo(map);
-      // Fit the map bounds to the GeoJSON features
-      map.fitBounds(geojsonLayer.getBounds());
-      mapLoadTime[level] = Date.now();
-    })
-    .catch(error => console.error('Error loading GeoJSON file:', error));
-
-    // Initialize the Leaflet map in a single container.
-    // We use the same container for all sections.
+    // Initialize the Leaflet map without a tile layer (only displaying GeoJSON polygons)
     map = L.map('map', {
-  // Optionally, disable zoom controls or other default controls
-    zoomControl: true,
-    attributionControl: false
-    }).setView([0, 0], 2); 
+      zoomControl: true,
+      attributionControl: false
+    }).setView([0, 0], 2);
+    // Set background color of map container
+    document.getElementById('map').style.background = "white";
 
     // Initially load GeoJSON for level 1
     loadGeoJSONForLevel(1);
+
     // Function to submit the survey answer for the current question (map level)
     function submitAnswer(questionNumber) {
       const participant_id = localStorage.getItem('participant_id') || 'anonymous';
       const question_id = 'Q' + questionNumber;
       const complexity = questionNumber === 1 ? 'Low' : questionNumber === 2 ? 'Medium' : 'High';
-      // For change_condition, we assume that if the "changing" unit exists, its presence means a "Change" condition.
-      const change_condition = changingLayer && changingLayer.feature.properties.changing ? 'Change' : 'No Change';
-
-      // Get participant's response from radio buttons
+      const change_condition = (changingLayer && changingLayer.feature.properties.changing) ? 'Change' : 'No Change';
       const radios = document.getElementsByName('response' + questionNumber);
       let participant_response = '';
       for (const radio of radios) {
@@ -277,12 +248,8 @@
           break;
         }
       }
-      // Get confidence rating from the dropdown
       const confidence = parseInt(document.getElementById('confidence' + questionNumber).value);
-      // Calculate reaction time from map load time
       const reaction_time = Date.now() - mapLoadTime[questionNumber];
-
-      // Prepare data to send to the backend
       const data = {
         participant_id: participant_id,
         question_id: question_id,
@@ -292,8 +259,6 @@
         confidence: confidence,
         reaction_time: reaction_time
       };
-
-      // Send the response to the backend
       fetch('https://change-blindness-study.onrender.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -312,29 +277,21 @@
 
     // Function to move to the next section (map level) or finish the survey
     function nextSection(current) {
-      // Animate the "changing" unit color transition before loading the next map level
       if (changingLayer) {
         const newRandomColor = randomColor();
         animateFeatureColor(changingLayer, changingLayer.feature.properties.currentColor, newRandomColor, 2000);
-        // Update the stored color after animation
         changingLayer.feature.properties.currentColor = newRandomColor;
       }
-      // After a short delay to let the animation complete, load the next section
       setTimeout(() => {
         const next = current + 1;
-        // If there is a next section, update the form UI (e.g., hide current radio selections, etc.)
-        // For simplicity, here we assume the sections are handled by reloading the GeoJSON file
         if (next <= 3) {
-          // Update the visible section in the DOM by reloading the appropriate GeoJSON file
           loadGeoJSONForLevel(next);
-          // You might also update the UI here (e.g., clear selected responses)
           document.getElementById('section' + current).classList.remove('active');
           document.getElementById('section' + next).classList.add('active');
         } else {
-          // If no more sections, redirect to a thank-you page
           window.location.href = 'thankyou.html';
         }
-      }, 2100); // Wait slightly longer than the animation duration
+      }, 2100);
     }
   </script>
 </body>
