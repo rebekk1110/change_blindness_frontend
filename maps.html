@@ -3,134 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GIS Survey - Maps</title>
+  <title>GIS Survey - Map Questions</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body { 
-      font-family: 'Roboto', sans-serif; 
-      background: #f2f2f2; 
-      margin: 0; 
-      padding: 0; 
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
       color: #333;
     }
     header {
-      background: #007bff; 
-      color: #fff; 
-      text-align: center; 
+      background: #007bff;
+      color: #fff;
+      text-align: center;
       padding: 1em;
     }
     .container {
-      max-width: 800px; 
-      margin: 2em auto; 
-      background: #fff; 
-      padding: 2em; 
-      border-radius: 8px; 
+      max-width: 800px;
+      margin: 2em auto;
+      background: #fff;
+      padding: 2em;
+      border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    h1, h2 { margin-top: 0; }
-    .map-section { display: none; }
-    .map-section.active { display: block; }
-    .map { 
-      height: 400px; 
-      margin-bottom: 1em; 
-      border: 1px solid #ccc; 
+    .map-section {
+      display: none;
+    }
+    .map-section.active {
+      display: block;
+    }
+    .map {
+      height: 400px;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
       border-radius: 4px;
     }
     .btn {
-      padding: 0.75em 1.5em; 
-      background: #007bff; 
-      border: none; 
-      color: #fff; 
-      border-radius: 4px; 
-      cursor: pointer; 
+      padding: 0.75em 1.5em;
+      background: #007bff;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
       margin-top: 1em;
-      font-size: 1em; 
+      font-size: 1em;
       transition: background 0.3s;
     }
-    .btn:hover { background: #0056b3; }
-    label { 
+    .btn:hover {
+      background: #0056b3;
+    }
+    label {
       font-weight: bold;
+      display: block;
+      margin: 0.5em 0;
+    }
+    select, input[type="radio"] {
+      margin: 0.5em 0;
     }
   </style>
-  <!-- Include Leaflet CSS for map rendering -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
   <header>
     <h1>GIS Survey - Map Questions</h1>
   </header>
   <div class="container">
-    <!-- Map Section 1 -->
+    <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
-      <h2>Map 1</h2>
-      <div id="map1" class="map"></div>
-      <p>Tick the box if you noticed any change on this map:</p>
-      <label>
-        <input type="checkbox" id="map1-changed">
-        I noticed a change.
-      </label>
-      <br>
-      <button class="btn" onclick="sendAnswer(1)">Send Answer</button>
+      <h2>Question 1: Low Complexity</h2>
+      <!-- The map container for level 1 -->
+      <div id="map" class="map"></div>
+      <p>Did you notice a change on this map?</p>
+      <label><input type="radio" name="response1" value="Change" required> Change</label>
+      <label><input type="radio" name="response1" value="No Change" required> No Change</label>
+      <p>How confident are you? (1 - Not confident to 5 - Very confident)</p>
+      <select id="confidence1" required>
+        <option value="1">1 - Not confident</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 - Very confident</option>
+      </select>
+      <button class="btn" onclick="submitAnswer(1)">Send Answer</button>
     </div>
-    <!-- Map Section 2 -->
+    <!-- Section 2: Medium Complexity -->
     <div id="section2" class="map-section">
-      <h2>Map 2</h2>
-      <div id="map2" class="map"></div>
-      <p>Tick the box if you noticed any change on this map:</p>
-      <label>
-        <input type="checkbox" id="map2-changed">
-        I noticed a change.
-      </label>
-      <br>
-      <button class="btn" onclick="sendAnswer(2)">Send Answer</button>
+      <h2>Question 2: Medium Complexity</h2>
+      <div id="map" class="map"></div>
+      <p>Did you notice a change on this map?</p>
+      <label><input type="radio" name="response2" value="Change" required> Change</label>
+      <label><input type="radio" name="response2" value="No Change" required> No Change</label>
+      <p>How confident are you?</p>
+      <select id="confidence2" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button class="btn" onclick="submitAnswer(2)">Send Answer</button>
     </div>
-    <!-- Map Section 3 -->
+    <!-- Section 3: High Complexity -->
     <div id="section3" class="map-section">
-      <h2>Map 3</h2>
-      <div id="map3" class="map"></div>
-      <p>Tick the box if you noticed any change on this map:</p>
-      <label>
-        <input type="checkbox" id="map3-changed">
-        I noticed a change.
-      </label>
-      <br>
-      <button class="btn" onclick="sendAnswer(3)">Send Answer</button>
+      <h2>Question 3: High Complexity</h2>
+      <div id="map" class="map"></div>
+      <p>Did you notice a change on this map?</p>
+      <label><input type="radio" name="response3" value="Change" required> Change</label>
+      <label><input type="radio" name="response3" value="No Change" required> No Change</label>
+      <p>How confident are you?</p>
+      <select id="confidence3" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button class="btn" onclick="submitAnswer(3)">Send Answer</button>
     </div>
   </div>
 
-  <!-- Include Leaflet JS for map rendering -->
+  <!-- Include Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Initialize a map using Leaflet
-    function initMap(divId) {
-      const map = L.map(divId).setView([37.8, -96], 4);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19, 
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
-      // Additional map animation or layer logic can be added here
-      return map;
+    // Base colors for non-changing provinces per complexity level
+    const baseColors = { 1: "#d3d3d3", 2: "#a9a9a9", 3: "#696969" };
+    let currentMapLevel = 1; // 1: Low, 2: Medium, 3: High
+    let changingLayer = null;
+    let map, geojsonLayer;
+    const mapLoadTime = {}; // Record the time each map loads
+
+    // Helper: Generate a random hex color
+    function randomColor() {
+      return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     }
 
-    // Initialize maps for each section
-    const map1 = initMap('map1');
-    const map2 = initMap('map2');
-    const map3 = initMap('map3');
+    // Helper: Interpolate between two colors (color1 and color2) with fraction t (0 to 1)
+    function interpolateColor(color1, color2, t) {
+      const c1 = parseInt(color1.slice(1), 16),
+            c2 = parseInt(color2.slice(1), 16);
+      const r1 = (c1 >> 16) & 0xff, g1 = (c1 >> 8) & 0xff, b1 = c1 & 0xff;
+      const r2 = (c2 >> 16) & 0xff, g2 = (c2 >> 8) & 0xff, b2 = c2 & 0xff;
+      const r = Math.round(r1 + (r2 - r1) * t),
+            g = Math.round(g1 + (g2 - g1) * t),
+            b = Math.round(b1 + (b2 - b1) * t);
+      return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
 
-    // Function to send answer for a given map section
-    function sendAnswer(mapNumber) {
+    // Animate the "changing" unit's color transition from startColor to endColor over duration ms
+    function animateFeatureColor(layer, startColor, endColor, duration) {
+      const startTime = performance.now();
+      function step(currentTime) {
+        let progress = (currentTime - startTime) / duration;
+        if (progress > 1) progress = 1;
+        const newColor = interpolateColor(startColor, endColor, progress);
+        layer.setStyle({ fillColor: newColor });
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Style function for GeoJSON features
+    function styleFeature(feature) {
+      if (feature.properties && feature.properties.changing) {
+        // For the changing unit, use its currentColor or assign one if not set
+        if (!feature.properties.currentColor) {
+          feature.properties.currentColor = randomColor();
+        }
+        return {
+          fillColor: feature.properties.currentColor,
+          weight: 2,
+          opacity: 1,
+          color: 'white',
+          dashArray: '3',
+          fillOpacity: 0.7
+        };
+      } else {
+        return {
+          fillColor: baseColors[currentMapLevel],
+          weight: 2,
+          opacity: 1,
+          color: 'white',
+          dashArray: '3',
+          fillOpacity: 0.7
+        };
+      }
+    }
+
+    // Function to load a GeoJSON file from the "change_blindness" folder based on map level
+    function loadGeoJSONForLevel(level) {
+      let fileName = "";
+      if (level === 1) fileName = "map1.geojson";
+      else if (level === 2) fileName = "map2.geojson";
+      else if (level === 3) fileName = "map3.geojson";
+
+      const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
+      fetch(geoJsonURL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(geojsonData => {
+          if (geojsonLayer) {
+            geojsonLayer.remove();
+          }
+          currentMapLevel = level;
+          geojsonLayer = L.geoJSON(geojsonData, {
+            style: styleFeature,
+            onEachFeature: function(feature, layer) {
+              if (feature.properties && feature.properties.changing) {
+                changingLayer = layer;
+              }
+            }
+          }).addTo(map);
+          mapLoadTime[level] = Date.now();
+        })
+        .catch(error => console.error('Error loading GeoJSON file:', error));
+    }
+    // Initialize the Leaflet map in a single container.
+    // We use the same container for all sections.
+    map = L.map('map').setView([41, -98], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Initially load GeoJSON for level 1
+    loadGeoJSONForLevel(1);
+
+    // Function to submit the survey answer for the current question (map level)
+    function submitAnswer(questionNumber) {
       const participant_id = localStorage.getItem('participant_id') || 'anonymous';
-      const checkboxId = 'map' + mapNumber + '-changed';
-      const changed = document.getElementById(checkboxId).checked;
+      const question_id = 'Q' + questionNumber;
+      const complexity = questionNumber === 1 ? 'Low' : questionNumber === 2 ? 'Medium' : 'High';
+      // For change_condition, we assume that if the "changing" unit exists, its presence means a "Change" condition.
+      const change_condition = changingLayer && changingLayer.feature.properties.changing ? 'Change' : 'No Change';
 
+      // Get participant's response from radio buttons
+      const radios = document.getElementsByName('response' + questionNumber);
+      let participant_response = '';
+      for (const radio of radios) {
+        if (radio.checked) {
+          participant_response = radio.value;
+          break;
+        }
+      }
+      // Get confidence rating from the dropdown
+      const confidence = parseInt(document.getElementById('confidence' + questionNumber).value);
+      // Calculate reaction time from map load time
+      const reaction_time = Date.now() - mapLoadTime[questionNumber];
+
+      // Prepare data to send to the backend
       const data = {
         participant_id: participant_id,
-        map: mapNumber,
-        response: changed ? "changed" : "no change",
-        timestamp: new Date().toISOString()
+        question_id: question_id,
+        complexity: complexity,
+        change_condition: change_condition,
+        participant_response: participant_response,
+        confidence: confidence,
+        reaction_time: reaction_time
       };
 
-      // Replace with your actual backend URL
+      // Send the response to the backend
       fetch('https://change-blindness-study.onrender.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -138,27 +276,40 @@
       })
       .then(response => response.json())
       .then(result => {
-        console.log('Response saved:', result);
-        alert('Your answer for Map ' + mapNumber + ' was submitted.');
-        nextSection(mapNumber);
+        alert('Your answer for Question ' + questionNumber + ' was submitted.');
+        nextSection(questionNumber);
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('There was an error submitting your answer for Map ' + mapNumber);
+        alert('There was an error submitting your answer for Question ' + questionNumber);
       });
     }
 
-    // Function to move to the next map section, or finish survey if last map
+    // Function to move to the next section (map level) or finish the survey
     function nextSection(current) {
-      document.getElementById('section' + current).classList.remove('active');
-      const next = current + 1;
-      const nextSectionEl = document.getElementById('section' + next);
-      if (nextSectionEl) {
-        nextSectionEl.classList.add('active');
-      } else {
-        // If no next section, finish survey
-        window.location.href = 'thankyou.html';
+      // Animate the "changing" unit color transition before loading the next map level
+      if (changingLayer) {
+        const newRandomColor = randomColor();
+        animateFeatureColor(changingLayer, changingLayer.feature.properties.currentColor, newRandomColor, 2000);
+        // Update the stored color after animation
+        changingLayer.feature.properties.currentColor = newRandomColor;
       }
+      // After a short delay to let the animation complete, load the next section
+      setTimeout(() => {
+        const next = current + 1;
+        // If there is a next section, update the form UI (e.g., hide current radio selections, etc.)
+        // For simplicity, here we assume the sections are handled by reloading the GeoJSON file
+        if (next <= 3) {
+          // Update the visible section in the DOM by reloading the appropriate GeoJSON file
+          loadGeoJSONForLevel(next);
+          // You might also update the UI here (e.g., clear selected responses)
+          document.getElementById('section' + current).classList.remove('active');
+          document.getElementById('section' + next).classList.add('active');
+        } else {
+          // If no more sections, redirect to a thank-you page
+          window.location.href = 'thankyou.html';
+        }
+      }, 2100); // Wait slightly longer than the animation duration
     }
   </script>
 </body>
