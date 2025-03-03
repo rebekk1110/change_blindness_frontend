@@ -31,13 +31,11 @@
     .map-section {
       display: none;
     }
-<<<<<<< HEAD
-=======
+
     #map {
     background: white; /* or any color you prefer */
     height: 500px;
      } 
->>>>>>> 1cae413ff56040d3fdcd892812b190aeb3838a3e
     .map-section.active {
       display: block;
     }
@@ -78,11 +76,8 @@
   <div class="container">
     <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
-<<<<<<< HEAD
-      <h2>Question 1: Low Complexity</h2>
-=======
+
       <h2>Question 1: Low Complexity!--</h2>
->>>>>>> 1cae413ff56040d3fdcd892812b190aeb3838a3e
       <!-- The map container for level 1 -->
       <div id="map" class="map"></div>
       <p>Did you notice a change on this map?</p>
@@ -261,7 +256,7 @@
       mapLoadTime[level] = Date.now();
     })
     .catch(error => console.error('Error loading GeoJSON file:', error));
-    
+
     // Initialize the Leaflet map in a single container.
     // We use the same container for all sections.
     map = L.map('map', {
