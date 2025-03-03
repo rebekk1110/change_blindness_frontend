@@ -54,7 +54,7 @@
       cursor: pointer;
       margin-top: 1em;
       font-size: 1em;
-      transition: background 0.3s;
+      /* transition: background 0.3s; */
     }
     .btn:hover {
       background: #0056b3;
@@ -225,14 +225,7 @@
         .catch(error => console.error('Error loading GeoJSON file:', error));
     }
 
-    // Initialize the Leaflet map in a single container.
     // We use the same container for all sections.
-    map = L.map('map').setView([41, -98], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
       let fileName = "";
       if (level === 1) fileName = "map1.geojson";
       else if (level === 2) fileName = "map2.geojson";
@@ -264,9 +257,9 @@
     zoomControl: true,
     attributionControl: false
     }).setView([0, 0], 2); 
+
     // Initially load GeoJSON for level 1
     loadGeoJSONForLevel(1);
-
     // Function to submit the survey answer for the current question (map level)
     function submitAnswer(questionNumber) {
       const participant_id = localStorage.getItem('participant_id') || 'anonymous';
