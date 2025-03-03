@@ -75,10 +75,10 @@
   <div class="container">
     <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
-      <h2>Question 1: Low Complexity!!</h2>
+      <h2>Question 1: Low Complexity!--</h2>
       <!-- The map container for level 1 -->
       <div id="map" class="map"></div>
-      <p>Did you notice a change on this map???</p>
+      <p>Did you notice a change on this map?</p>
       <label><input type="radio" name="response1" value="Change" required> Change</label>
       <label><input type="radio" name="response1" value="No Change" required> No Change</label>
       <p>How confident are you? (1 - Not confident to 5 - Very confident)</p>
@@ -205,36 +205,30 @@
 
       const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
       fetch(geoJsonURL)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
+      .then(geojsonData => {
+      if (geojsonLayer) { geojsonLayer.remove(); }
+      currentMapLevel = level;
+      geojsonLayer = L.geoJSON(geojsonData, {
+        style: styleFeature,
+        onEachFeature: function(feature, layer) {
+          if (feature.properties && feature.properties.changing) {
+            changingLayer = layer;
           }
-          return response.json();
-        })
-        .then(geojsonData => {
-          if (geojsonLayer) {
-            geojsonLayer.remove();
-          }
-          currentMapLevel = level;
-          geojsonLayer = L.geoJSON(geojsonData, {
-            style: styleFeature,
-            onEachFeature: function(feature, layer) {
-              if (feature.properties && feature.properties.changing) {
-                changingLayer = layer;
-              }
-            }
-          }).addTo(map);
-          mapLoadTime[level] = Date.now();
-        })
-        .catch(error => console.error('Error loading GeoJSON file:', error));
-    }
+        }
+      }).addTo(map);
+      // Fit the map bounds to the GeoJSON features
+      map.fitBounds(geojsonLayer.getBounds());
+      mapLoadTime[level] = Date.now();
+    })
+    .catch(error => console.error('Error loading GeoJSON file:', error));
+}
     // Initialize the Leaflet map in a single container.
     // We use the same container for all sections.
     map = L.map('map', {
   // Optionally, disable zoom controls or other default controls
     zoomControl: true,
     attributionControl: false
-    }).setView([YOUR_LAT, YOUR_LNG], YOUR_ZOOM_LEVEL);
+    }).setView([0, 0], 2); 
     // Initially load GeoJSON for level 1
     loadGeoJSONForLevel(1);
 
