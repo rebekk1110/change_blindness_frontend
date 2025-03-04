@@ -15,11 +15,12 @@
     <h1>GIS Survey - Map Questions</h1>
   </header>
   <div class="container">
+    <div id="map"></div>
     <!-- Section 1: Low Complexity -->
     <div id="section1" class="map-section active">
       <h2>Question 1: Low Complexity!!!*</h2>
       <!-- Single map container used across all sections -->
-      <div id="map"></div>
+     
       <p>Did () you notice a change on this map?</p>
       <label><input type="radio" name="response1" value="Change" required> Change</label>
       <label><input type="radio" name="response1" value="No Change" required> No Change</label>
@@ -72,7 +73,27 @@
   <!-- Include Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Base colors for non-changing provinces per complexity level
+    function getColor(color_id) {
+    switch (color_id) {
+        case 1: return '#D3D3D3'; // Light Gray
+        case 2: return '#A9A9A9'; // Medium Gray
+        case 3: return '#696969'; // Dark Gray
+        default: return '#CCCCCC'; // Fallback Gray
+    }
+}
+
+function styleFeature(feature) {
+    return {
+        fillColor: getColor(feature.properties.color_id || 0), // ✅ Use `color_id`
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+/*     // Base colors for non-changing provinces per complexity level
     const baseColors = { 1: "#d3d3d3", 2: "#a9a9a9", 3: "#696969" };
     let currentMapLevel = 1; // 1: Low, 2: Medium, 3: High
     let changingLayer = null;
@@ -110,7 +131,6 @@
       }
       requestAnimationFrame(step);
     }
-
     // Style function for GeoJSON features
     function styleFeature(feature) {
       if (feature.properties && feature.properties.changing) {
@@ -136,40 +156,45 @@
         };
       }
     }
-
+*/
     // Function to load a GeoJSON file for a given map level from an absolute URL
     function loadGeoJSONForLevel(level) {
-      currentMapLevel = level;
-      let fileName = "";
-      if (level === 1) fileName = "map1.geojson";
-      else if (level === 2) fileName = "map2.geojson";
-      else if (level === 3) fileName = "map3.geojson";
-      const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
-      fetch(geoJsonURL)
+    currentMapLevel = level;
+    let fileName = "";
+    
+    if (level === 1) fileName = "map1.geojson";
+    else if (level === 2) fileName = "map2.geojson";
+    else if (level === 3) fileName = "map3.geojson";
+    
+    const geoJsonURL = "https://rebekk1110.github.io/change_blindness_frontend/" + fileName;
+
+    fetch(geoJsonURL)
         .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then(geojsonData => {
-          if (geojsonLayer) {
-            geojsonLayer.remove();
-          }
-          geojsonLayer = L.geoJSON(geojsonData, {
-            style: styleFeature,
-            onEachFeature: function(feature, layer) {
-              if (feature.properties && feature.properties.changing) {
-                changingLayer = layer;
-              }
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
-          }).addTo(map);
-          // Fit the map bounds to the GeoJSON features
-          map.fitBounds(geojsonLayer.getBounds());
-          mapLoadTime[level] = Date.now();
+            return response.json();
+        })
+        .then(geojsonData => {  // ✅ This `.then()` handles the actual GeoJSON data
+            if (geojsonLayer) {
+                geojsonLayer.clearLayers();  // Clears previous data but keeps the map intact
+            }
+            geojsonLayer = L.geoJSON(geojsonData, {
+                style: styleFeature,
+                onEachFeature: function(feature, layer) {
+                    if (feature.properties && feature.properties.changing) {
+                        changingLayer = layer;
+                    }
+                }
+            }).addTo(map);
+            
+            // Fit the map bounds to the new GeoJSON features
+            map.fitBounds(geojsonLayer.getBounds());
+            mapLoadTime[level] = Date.now();
         })
         .catch(error => console.error('Error loading GeoJSON file:', error));
-    }
+}
+
 
     // Initialize the Leaflet map without a tile layer (only displaying GeoJSON polygons)
     map = L.map('map', {
