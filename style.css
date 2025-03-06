@@ -1,0 +1,53 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  header {
+    background: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+  }
+  .container {
+    max-width: 800px;
+    margin: 2em auto;
+    background: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .map-section {
+    display: none;
+  }
+  .map-section.active {
+    display: block;
+  }
+  /* We use a single map container with id "map" */
+  #map {
+    background: white;
+    height: 500px;
+  }
+  .btn {
+    padding: 0.75em 1.5em;
+    background: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1em;
+    font-size: 1em;
+  }
+  .btn:hover {
+    background: #0056b3;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin: 0.5em 0;
+  }
+  select, input[type="radio"] {
+    margin: 0.5em 0;
+  }
