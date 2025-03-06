@@ -49,8 +49,8 @@
                 <h2>Participant Information</h2>
                 <form on:submit|preventDefault={submitDemographics}>
                     <div class="form-group">
-                        <label>Gender</label>
-                        <select bind:value={gender}>
+                        <label for="gender">Gender</label>
+                        <select id="gender" bind:value={gender}>
                             <option value="">Select...</option>
                             <option value="female">Female</option>
                             <option value="male">Male</option>
@@ -58,10 +58,10 @@
                             <option value="prefer-not">Prefer not to say</option>
                         </select>
                     </div>
-
+                
                     <div class="form-group">
-                        <label>Education Level</label>
-                        <select bind:value={education}>
+                        <label for="education">Education Level</label>
+                        <select id="education" bind:value={education}>
                             <option value="">Select...</option>
                             <option value="high-school">High School</option>
                             <option value="bachelor">Bachelor's Degree</option>
@@ -69,23 +69,24 @@
                             <option value="phd">PhD</option>
                         </select>
                     </div>
-
+                
                     <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" bind:value={age} min="1" placeholder="Enter your age" />
+                        <label for="age">Age</label>
+                        <input id="age" type="number" bind:value={age} min="1" placeholder="Enter your age" />
                     </div>
-
+                
                     <div class="form-group">
-                        <label>Professional Experience with Maps</label>
-                        <select bind:value={experience}>
+                        <label for="experience">Professional Experience with Maps</label>
+                        <select id="experience" bind:value={experience}>
                             <option value="">Select...</option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
                     </div>
-
+                
                     <button class="btn-primary" type="submit">Start Test</button>
                 </form>
+                
             </div>
         </div>
     </div>
