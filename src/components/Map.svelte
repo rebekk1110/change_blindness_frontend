@@ -15,7 +15,7 @@
   }
 
   function getGeoJSONUrl(level) {
-    return `/map${level}.geojson`;
+    return `${import.meta.env.BASE_URL}map${level}.geojson`;
   }
 
   function interpolateColor(color1, color2, progress) {
