@@ -120,7 +120,7 @@
       </select>
 
       <label for="age">Age</label>
-      <input type="number" id="age" name="age" required min="1" />
+      <input type="number" id="age" name="age" required min="1" max="99"/>
 
       <label for="experience">Professional Experience with Maps</label>
       <select id="experience" name="experience" required>
@@ -159,11 +159,22 @@
   })
   .then(response => response.json())
   .then(result => {
+    if (result.participant_id) {
+        localStorage.setItem('participant_id', result.participant_id);
+        console.log("Participant ID saved:", result.participant_id); // Debugging log
+        window.location.href = 'maps.html';
+    } else {
+        throw new Error("Missing participant_id in response");
+    }
+})
+
+/*   .then(result => {
     // Store the participant_id locally for later use
     localStorage.setItem('participant_id', result.participant_id);
     // Redirect to the maps page
     window.location.href = 'maps.html';
   })
+ */
   .catch(error => {
     console.error('Error:', error);
     alert('There was an error registering your information.');
