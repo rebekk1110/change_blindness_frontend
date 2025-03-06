@@ -35,9 +35,9 @@
                 </p>
                 <h3>Test Instructions</h3>
                 <p>
-                    In this test, you will be shown maps with **changing elements**.
-                    Your task is to determine whether a change has occurred.
-                    The test consists of three rounds with increasing complexity.
+                    In this test, you will be shown maps with **changing elements.
+                    Your task is to determine whether a change has occurred.  v
+                    The test consists of three rounds with increasing complexity. 
                     Please pay close attention and answer as accurately as possible.
                 </p>
             </div>
