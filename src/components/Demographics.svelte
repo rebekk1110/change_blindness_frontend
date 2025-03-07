@@ -4,6 +4,7 @@
     const dispatch = createEventDispatcher();
     export let participantId; 
     let gender = "", education = "", age = "", experience = "";
+    let consent = true;
 
   
     async function submitDemographics() {
