@@ -12,8 +12,6 @@
   let animationStarted = false;
   
 
-  console.log("Received participantId:", participantId);
-
 
   function getColor(color_id) {
     return color_id === 1 ? "#D3D3D3" : color_id === 2 ? "#A9A9A9" : "#696969";
