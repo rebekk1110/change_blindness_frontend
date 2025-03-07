@@ -6,23 +6,23 @@
   import Survey from "./components/Survey.svelte";
   import ThankYou from "./components/Thankyou.svelte";
 
-  let step = 1;  // Skip directly to survey for testing
-  let currentLevel = 1;
-  let totalQuestions = 3;
-  let participantId = "";  // Declare participantId here
-  let changeCondition = "No change"; 
+  let step = 1;  // Step tracker
+  let currentLevel = 1;  // Level tracker for questions
+  let totalQuestions = 3;  // Total number of questions
+  let participantId;  // Will store the participant ID after registration
+  let changeCondition = "No change";  // Default change condition
 
   // Handle nextStep event to update the participantId and move to the next step
-  function nextStep(data) {
+  function nextStep(participantId) {
     if (step === 2) {
-      participantId = data;  // Set participantId
+      participantId = participantId;  // Set participantId
     }
     step++;  // Move to the next step
   }
 
-  // Handle the next level and pass the participantId along with the changeCondition
+  // Handle the next level
   function nextLevel(event) {
-    participantId = event.detail;  
+    participantId = event.detail;
     console.log("Received participantId in App.svelte:", participantId);
 
     if (currentLevel < totalQuestions) {
@@ -33,7 +33,8 @@
   }
 
   onMount(() => {
-    document.addEventListener("next", nextLevel);  // Listen for next event from Demographics or Map
+    // Listen for the 'next' event to update the participantId and move to the next level
+    document.addEventListener("next", nextLevel); 
     console.log("Passing participantId:", participantId);
   });
 </script>
@@ -49,7 +50,7 @@
   {#if step === 1}
     <Consent on:next={nextStep} />
   {:else if step === 2}
-    <Demographics on:next={nextStep} />
+    <Demographics onNext={nextStep} /> <!-- Pass nextStep as the onNext callback -->
   {:else if step === 3}
     <div class="map-container">
       <Map level={currentLevel} changeCondition={changeCondition} />
@@ -61,3 +62,5 @@
     <ThankYou />
   {/if}
 </main>
+
+

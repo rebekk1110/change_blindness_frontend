@@ -1,17 +1,17 @@
-<script>
-    import { createEventDispatcher } from "svelte";
-
-    const dispatch = createEventDispatcher();
-    export let participantId; 
-    let gender = "", education = "", age = "", experience = "";
-    let consent = true;
-
+<script lang="ts">
+    // No need for createEventDispatcher in Svelte 5
+    export let onNext: (participantId: number) => void; // Defining the type of onNext prop
   
+    let gender = "";
+    let education = "";
+    let age = "";
+    let experience = "";
+    let consent = true;
+    
     async function submitDemographics() {
     const data = { gender, education, age, experience, consent };
 
     try {
-      // Send the data to the backend to register the participant
       const response = await fetch("https://change-blindness-web.onrender.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -20,11 +20,9 @@
 
       const result = await response.json();
       if (result.participant_id) {
-        // After successful registration, pass the participant_id back to App.svelte
-        participantId = result.participant_id;
-        console.log("Participant ID received:", participantId);
-        // Send next step signal
-        dispatch("next", participantId);
+        console.log("Participant ID received:", result.participant_id);
+        // Pass the participantId back to App.svelte
+        onNext(result.participant_id); 
       } else {
         console.error("Failed to get participant_id");
       }
@@ -32,78 +30,74 @@
       console.error("Error during registration:", error);
     }
   }
-  </script>
-
-
-
+</script>
+  
   <div class="main-container">
     <div class="content-wrapper">
-        <!-- Left Section: Intro & Description -->
-        <div class="left-section">
-            <div class="intro-section">
-                <h1>Welcome to the Experiment</h1>
-                <p>
-                    Thank you for participating in this study on <strong>change blindness in choropleth maps</strong>.
-                    This experiment consists of several tasks where you need to detect changes in the presented maps.
-                </p>
-                <h3>Test Instructions</h3>
-                <p>
-                    In this test, you will be shown maps with **changing elements.
-                    Your task is to determine whether a change has occurred.  v
-                    The test consists of three rounds with increasing complexity. 
-                    Please pay close attention and answer as accurately as possible.
-                </p>
-            </div>
+      <!-- Left Section: Intro & Description -->
+      <div class="left-section">
+        <div class="intro-section">
+          <h1>Welcome to the Experiment</h1>
+          <p>
+            Thank you for participating in this study on <strong>change blindness in choropleth maps</strong>.
+            This experiment consists of several tasks where you need to detect changes in the presented maps.
+          </p>
+          <h3>Test Instructions</h3>
+          <p>
+            In this test, you will be shown maps with **changing elements**. Your task is to determine whether a change has occurred. The test consists of three rounds with increasing complexity.
+            Please pay close attention and answer as accurately as possible.
+          </p>
         </div>
-
-        <!-- Right Section: Survey -->
-        <div class="right-section">
-            <div class="survey-container">
-                <h2>Participant Information</h2>
-                <form on:submit|preventDefault={submitDemographics}>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender" bind:value={gender}>
-                            <option value="">Select...</option>
-                            <option value="female">Female</option>
-                            <option value="male">Male</option>
-                            <option value="non-binary">Non-binary</option>
-                            <option value="prefer-not">Prefer not to say</option>
-                        </select>
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="education">Education Level</label>
-                        <select id="education" bind:value={education}>
-                            <option value="">Select...</option>
-                            <option value="high-school">High School</option>
-                            <option value="bachelor">Bachelor's Degree</option>
-                            <option value="master">Master's Degree</option>
-                            <option value="phd">PhD</option>
-                        </select>
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input id="age" type="number" bind:value={age} min="1" placeholder="Enter your age" />
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="experience">Professional Experience with Maps</label>
-                        <select id="experience" bind:value={experience}>
-                            <option value="">Select...</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                
-                    <button class="btn-primary" type="submit">Start Test</button>
-                </form>
-                
+      </div>
+  
+      <!-- Right Section: Survey -->
+      <div class="right-section">
+        <div class="survey-container">
+          <h2>Participant Information</h2>
+          <form on:submit|preventDefault={submitDemographics}>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select id="gender" bind:value={gender}>
+                <option value="">Select...</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="non-binary">Non-binary</option>
+                <option value="prefer-not">Prefer not to say</option>
+              </select>
             </div>
+  
+            <div class="form-group">
+              <label for="education">Education Level</label>
+              <select id="education" bind:value={education}>
+                <option value="">Select...</option>
+                <option value="high-school">High School</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="master">Master's Degree</option>
+                <option value="phd">PhD</option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input id="age" type="number" bind:value={age} min="1" placeholder="Enter your age" />
+            </div>
+  
+            <div class="form-group">
+              <label for="experience">Professional Experience with Maps</label>
+              <select id="experience" bind:value={experience}>
+                <option value="">Select...</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+  
+            <button class="btn-primary" type="submit">Start Test</button>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  
 
   <style>
 /* General Layout */
