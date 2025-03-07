@@ -3,15 +3,15 @@
   import L from "leaflet";
 
   export let level;
-  export let participantId; 
+  export let changeCondition;
   let map, geojsonLayer;
   let changingLayers = [];
   let mainFeatureLayer = null;
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
+  
 
-  let changeCondition = "No change";  // Default value for each level
   console.log("Received participantId:", participantId);
 
 
@@ -68,10 +68,7 @@
     animationStarted = true;
     showCountdown = true;
     
-    console.log("⏳ Countdown started...");
-
     let interval = setInterval(() => {
-        console.log(`⏳ Countdown: ${countdown}`);
         
         if (countdown > 1) {
             countdown -= 1;
@@ -141,44 +138,17 @@
     const bounds = layer.getBounds();
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
   }
-   // Randomly determine change condition (Change or No change)
-   function assignChangeCondition() {
-    changeCondition = Math.random() < 0.5 ? "Change" : "No change";
-    console.log("Assigned change condition:", changeCondition);
-  }
 
-  function submitAnswer() {
-
-    console.log("User answer:", userAnswer ? "Yes" : "No");
-    console.log("True answer:", trueAnswer);
-
-    const requestData = {
-      participant_id: participantId,  // Ensure this is passed correctly
-      question_id: level,  // Map level is used as the question ID
-      change_condition: changeCondition,  // "Change" or "No change"
-    };
-
-    console.log("Data being sent to backend:", requestData);
-
-    // Send the data to the backend using fetch
-    fetch("https://change-blindness-web.onrender.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestData)  // Send the data as JSON
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-  }
-
+  
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);
     loadGeoJSON(level);
 
-    assignChangeCondition();
+    changeCondition = Math.random() < 0.5 ? "Change" : "No change";  // Randomly assign Change or No change
+    console.log("Assigned change condition:", changeCondition);
+    dispatch('next', { changeCondition });  // Emit changeCondition to Survey.svelte
 
     document.addEventListener("resetAnimation", () => {
-        console.log("🔄 Resetting animation button...");
         animationStarted = false;
         showCountdown = false;
         countdown = 3;

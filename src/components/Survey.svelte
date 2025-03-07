@@ -2,6 +2,8 @@
   export let participantId;
   export let level;
   export let totalQuestions = 3;
+  export let changeCondition;  // Received from Map.svelte via props
+
 
   let response = "";
   let confidence = "";
@@ -22,6 +24,7 @@
       question_id: `Q${level}`,
       complexity: level === 1 ? "Low" : level === 2 ? "Medium" : "High",
       participant_response: response,
+      change_condition: changeCondition, 
       confidence,
     };
 
@@ -35,7 +38,7 @@
         console.log("⏳ Resetting button...");
         submitted = false;
 
-       document.dispatchEvent(new CustomEvent("resetAnimation"));
+        document.dispatchEvent(new CustomEvent("resetAnimation"));
 
         response = "";
         confidence = "";

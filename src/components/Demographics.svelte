@@ -2,30 +2,35 @@
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
-  
+    export let participantId; 
     let gender = "", education = "", age = "", experience = "";
-    let participantId= "";
-
 
   
     async function submitDemographics() {
-      const data = { gender, education, age, experience, consent: true };
-  
-      try {
-        let response = await fetch("https://change-blindness-web.onrender.com/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-  
-        let result = await response.json();
-        participantId = result.participant_id;  // Store participant_id
+    const data = { gender, education, age, experience, consent };
 
-        dispatch("next", result.participant_id);
-      } catch (error) {
-        console.error("Error:", error);
+    try {
+      // Send the data to the backend to register the participant
+      const response = await fetch("https://change-blindness-web.onrender.com/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (result.participant_id) {
+        // After successful registration, pass the participant_id back to App.svelte
+        participantId = result.participant_id;
+        console.log("Participant ID received:", participantId);
+        // Send next step signal
+        dispatch("next", participantId);
+      } else {
+        console.error("Failed to get participant_id");
       }
+    } catch (error) {
+      console.error("Error during registration:", error);
     }
+  }
   </script>
 
 

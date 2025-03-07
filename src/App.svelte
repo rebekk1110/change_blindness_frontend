@@ -11,6 +11,7 @@
   let currentLevel = 1;
   let totalQuestions = 3;
   let participantId = "";
+  let changeCondition = "No change"; 
   function nextStep(data) {
     if (step === 2) {
       participantId = data;
@@ -45,10 +46,10 @@
     <Demographics on:next={nextStep} />
   {:else if step === 3}
     <div class="map-container">
-      <Map level={currentLevel} />
+      <Map level={currentLevel} changeCondition={changeCondition}/>
     </div>
     <div class="survey-containerr">
-      <Survey participantId={participantId} level={currentLevel} totalQuestions={totalQuestions} />
+      <Survey participantId={participantId} changeCondition={changeCondition} level={currentLevel} totalQuestions={totalQuestions} />
     </div>
   {:else}
     <ThankYou />
