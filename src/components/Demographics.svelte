@@ -1,12 +1,12 @@
 <script>
     import { createEventDispatcher } from "svelte";
-
-    import Map from './Map.svelte' // Import the Maps component
+    export let participantId;
 
     const dispatch = createEventDispatcher();
   
     let gender = "", education = "", age = "", experience = "";
-    let participantId = ""; 
+
+
   
     async function submitDemographics() {
       const data = { gender, education, age, experience, consent: true };

@@ -35,14 +35,11 @@
         console.log("⏳ Resetting button...");
         submitted = false;
 
-        // ✅ Reset animation when moving to the next question
-        document.dispatchEvent(new CustomEvent("resetAnimation"));
+       document.dispatchEvent(new CustomEvent("resetAnimation"));
 
-        // ✅ Clear responses before loading next question
         response = "";
         confidence = "";
 
-        // ✅ Move to the next question
         document.dispatchEvent(new CustomEvent("next"));
       }, 1000);
     });

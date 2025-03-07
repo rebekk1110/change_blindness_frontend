@@ -3,13 +3,14 @@
   import L from "leaflet";
 
   export let level;
+  export let participantId; 
   let map, geojsonLayer;
   let changingLayers = [];
   let mainFeatureLayer = null;
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
-  export let participantId; 
+
   let changeCondition = "No change";  // Default value for each level
 
 
@@ -146,36 +147,28 @@
   }
 
   function submitAnswer() {
-    // Logic to determine if the user thought the main feature changed or not
-    const userAnswer = confirm("Did the main feature change color?");
-    const trueAnswer = changeCondition === "Change" ? "Yes" : "No";
-    
+
     console.log("User answer:", userAnswer ? "Yes" : "No");
     console.log("True answer:", trueAnswer);
-    console.log("Current change condition:", changeCondition);  // Log to verify
 
     const requestData = {
-        participant_id: participantId,  // Replace with actual participant ID
-        question_id: level,  // Use the level as the question ID
-        user_answer: userAnswer ? "Yes" : "No",  // Store "Yes" or "No" based on user answer
-        true_answer: trueAnswer,  // Store true answer ("Yes" or "No")
-        change_condition: changeCondition,  // "Change" or "No change"
-        confidence: 5,  // Example confidence value
-        reaction_time: 300  // Example reaction time
+      participant_id: participantId,  // Ensure this is passed correctly
+      question_id: level,  // Map level is used as the question ID
+      change_condition: changeCondition,  // "Change" or "No change"
     };
 
-    console.log("Data being sent to backend:", requestData);  // Log the data
+    console.log("Data being sent to backend:", requestData);
 
     // Send the data to the backend using fetch
     fetch("https://change-blindness-web.onrender.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestData)  // Send the data as JSON
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestData)  // Send the data as JSON
     })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
-}
+  }
 
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);

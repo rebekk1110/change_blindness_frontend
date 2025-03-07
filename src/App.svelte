@@ -10,6 +10,7 @@
   //let participantId = "test-user";
   let currentLevel = 1;
   let totalQuestions = 3;
+  let participantId = ""; 
 
   function nextStep(data) {
     if (step === 2) {
