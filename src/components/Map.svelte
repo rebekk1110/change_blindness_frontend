@@ -12,6 +12,7 @@
   let animationStarted = false;
 
   let changeCondition = "No change";  // Default value for each level
+  console.log("Received participantId:", participantId);
 
 
   function getColor(color_id) {
