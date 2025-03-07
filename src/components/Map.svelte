@@ -9,6 +9,8 @@
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
+  let changeCondition = "No change";  // Default value for each level
+
 
   function getColor(color_id) {
     return color_id === 1 ? "#D3D3D3" : color_id === 2 ? "#A9A9A9" : "#696969";
@@ -41,7 +43,6 @@
       layer.setStyle({ fillColor: newColor });
 
       console.log(`🔄 Updating feature ${layer.feature.properties.id}: ${startColor} → ${newColor}`);
-
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
@@ -147,10 +148,42 @@
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
     console.log("✅ Red outline added.");
   }
+   // Randomly determine change condition (Change or No change)
+   function assignChangeCondition() {
+    changeCondition = Math.random() < 0.5 ? "Change" : "No change";
+    console.log("Assigned change condition:", changeCondition);
+  }
+
+  function submitAnswer() {
+    // Logic to determine if the user thought the main feature changed or not
+    const userAnswer = confirm("Did the main feature change color?");
+    const trueAnswer = changeCondition === "Change" ? "Yes" : "No";
+    console.log("User answer:", userAnswer ? "Yes" : "No");
+    console.log("True answer:", trueAnswer);
+
+    fetch("/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        participant_id: "12345",  // Replace with actual participant ID
+        question_id: level,  // Use the level as the question ID
+        user_answer: userAnswer ? "Yes" : "No",
+        true_answer: trueAnswer,
+        change_condition: changeCondition,  // "Change" or "No change"
+        confidence: 5,  // Example confidence value
+        reaction_time: 300  // Example reaction time
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  }
 
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);
     loadGeoJSON(level);
+
+    assignChangeCondition();
 
     document.addEventListener("resetAnimation", () => {
         console.log("🔄 Resetting animation button...");
