@@ -2234,8 +2234,9 @@
         "source": "https://simplemaps.com",
         "id": "ROSM",
         "name": "Satu Mare",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 1
     },
@@ -3313,7 +3314,8 @@
         "id": "ROAR",
         "name": "Arad",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 2
     },
@@ -4155,7 +4157,8 @@
         "id": "ROBH",
         "name": "Bihor",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 3
     },
@@ -5593,7 +5596,8 @@
         "id": "ROTM",
         "name": "Timis",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 4
     },
@@ -6447,7 +6451,8 @@
         "id": "ROMH",
         "name": "Mehedinti",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 5
     },
@@ -7237,7 +7242,8 @@
         "id": "RODJ",
         "name": "Dolj",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 6
     },
@@ -7703,7 +7709,8 @@
         "id": "ROCL",
         "name": "Calarasi",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 7
     },
@@ -8284,8 +8291,9 @@
         "source": "https://simplemaps.com",
         "id": "ROTR",
         "name": "Teleorman",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 8
     },
@@ -8735,7 +8743,8 @@
         "id": "ROGR",
         "name": "Giurgiu",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 9
     },
@@ -9576,8 +9585,9 @@
         "source": "https://simplemaps.com",
         "id": "ROCT",
         "name": "Constanta",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 10
     },
@@ -10527,7 +10537,8 @@
         "id": "ROOT",
         "name": "Olt",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 11
     },
@@ -11632,8 +11643,9 @@
         "source": "https://simplemaps.com",
         "id": "ROCS",
         "name": "Caras-Severin",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 12
     },
@@ -14391,7 +14403,8 @@
         "id": "ROBT",
         "name": "Botosani",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 13
     },
@@ -15769,7 +15782,8 @@
         "id": "ROIS",
         "name": "Iasi",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 14
     },
@@ -16971,7 +16985,8 @@
         "id": "ROVS",
         "name": "Vaslui",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 15
     },
@@ -17716,8 +17731,9 @@
         "source": "https://simplemaps.com",
         "id": "ROGL",
         "name": "Galati",
-        "changing": true,
-        "mainFeature": true
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 16
     },
@@ -18498,8 +18514,9 @@
         "source": "https://simplemaps.com",
         "id": "ROSV",
         "name": "Suceava",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": true,
+        "color_id": 2
       },
       "id": 17
     },
@@ -20864,8 +20881,9 @@
         "source": "https://simplemaps.com",
         "id": "ROMM",
         "name": "Maramures",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 18
     },
@@ -22558,8 +22576,9 @@
         "source": "https://simplemaps.com",
         "id": "ROTL",
         "name": "Tulcea",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 19
     },
@@ -23672,8 +23691,9 @@
         "source": "https://simplemaps.com",
         "id": "ROCJ",
         "name": "Cluj",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 20
     },
@@ -24287,7 +24307,8 @@
         "id": "ROBN",
         "name": "Bistrita-Nasaud",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 21
     },
@@ -24993,7 +25014,8 @@
         "id": "ROSJ",
         "name": "Salaj",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 22
     },
@@ -25674,8 +25696,9 @@
         "source": "https://simplemaps.com",
         "id": "RODB",
         "name": "D\u00e2mbovita",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 23
     },
@@ -26151,7 +26174,8 @@
         "id": "ROIF",
         "name": "Ilfov",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 24
     },
@@ -26972,8 +26996,9 @@
         "source": "https://simplemaps.com",
         "id": "ROAG",
         "name": "Arges",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 25
     },
@@ -27511,7 +27536,8 @@
         "id": "ROGJ",
         "name": "Gorj",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 26
     },
@@ -28296,8 +28322,9 @@
         "source": "https://simplemaps.com",
         "id": "ROHD",
         "name": "Hunedoara",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 27
     },
@@ -28971,7 +28998,8 @@
         "id": "ROVL",
         "name": "V\u00e2lcea",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 28
     },
@@ -29617,7 +29645,8 @@
         "id": "ROPH",
         "name": "Prahova",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 29
     },
@@ -30142,8 +30171,9 @@
         "source": "https://simplemaps.com",
         "id": "ROCV",
         "name": "Covasna",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 30
     },
@@ -30829,7 +30859,8 @@
         "id": "ROVN",
         "name": "Vrancea",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 31
     },
@@ -31923,7 +31954,8 @@
         "id": "ROBZ",
         "name": "Buzau",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 32
     },
@@ -32573,7 +32605,8 @@
         "id": "ROBV",
         "name": "Brasov",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 33
     },
@@ -33338,8 +33371,9 @@
         "source": "https://simplemaps.com",
         "id": "ROSB",
         "name": "Sibiu",
-        "changing": false,
-        "mainFeature": false
+        "changing": true,
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 34
     },
@@ -34165,7 +34199,8 @@
         "id": "ROMS",
         "name": "Mures",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 35
     },
@@ -34951,7 +34986,8 @@
         "id": "ROHR",
         "name": "Harghita",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 36
     },
@@ -35776,8 +35812,9 @@
         "source": "https://simplemaps.com",
         "id": "RONT",
         "name": "Neamt",
-        "changing": true,
-        "mainFeature": false
+        "changing": false,
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 37
     },
@@ -36563,7 +36600,8 @@
         "id": "ROBC",
         "name": "Bacau",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 38
     },
@@ -37513,7 +37551,8 @@
         "id": "ROAB",
         "name": "Alba",
         "changing": false,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 39
     },
@@ -38207,7 +38246,8 @@
         "id": "ROBR",
         "name": "Braila",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 1
       },
       "id": 40
     },
@@ -38949,7 +38989,8 @@
         "id": "ROIL",
         "name": "Ialomita",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 2
       },
       "id": 41
     },
@@ -39043,7 +39084,8 @@
         "id": "ROB",
         "name": "Bucharest",
         "changing": true,
-        "mainFeature": false
+        "mainFeature": false,
+        "color_id": 3
       },
       "id": 42
     }
