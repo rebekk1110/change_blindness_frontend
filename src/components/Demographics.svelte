@@ -1,10 +1,10 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    export let participantId;
 
     const dispatch = createEventDispatcher();
   
     let gender = "", education = "", age = "", experience = "";
+    let participantId= "";
 
 
   
@@ -27,10 +27,7 @@
       }
     }
   </script>
-  
-    {#if participantId}
-        <Maps {participantId} />
-    {/if}
+
 
 
   <div class="main-container">
