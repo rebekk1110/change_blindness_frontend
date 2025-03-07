@@ -7,7 +7,6 @@
   import ThankYou from "./components/Thankyou.svelte";
 
   let step = 1;  // Skip directly to survey for testing
-  let participantId = "";
   //let participantId = "test-user";
   let currentLevel = 1;
   let totalQuestions = 3;

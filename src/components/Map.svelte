@@ -9,6 +9,7 @@
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
+  export let participantId; 
   let changeCondition = "No change";  // Default value for each level
 
 
@@ -42,11 +43,9 @@
       const newColor = interpolateColor(startColor, endColor, progress);
       layer.setStyle({ fillColor: newColor });
 
-      console.log(`🔄 Updating feature ${layer.feature.properties.id}: ${startColor} → ${newColor}`);
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        console.log(`✅ Feature ${layer.feature.properties.id} finished transition to ${endColor}`);
         if (callback) callback();
       }
     }
@@ -63,9 +62,7 @@
         console.warn("⚠ Animation already started, ignoring click.");
         return;
     }
-    
-    console.log("🟢 Start Animation button clicked!");
-    
+        
     animationStarted = true;
     showCountdown = true;
     
@@ -79,14 +76,12 @@
         } else {
             clearInterval(interval);
             showCountdown = false;
-            console.log("🚀 Countdown finished, triggering startColorChange()");
             startColorChange();
         }
     }, 1000);
 }
 
   function startColorChange() {
-    console.log("🚀 Starting color transition!");
     
     if (changingLayers.length === 0) {
       console.warn("⚠ No changing features found!");
@@ -94,13 +89,11 @@
     }
 
     changingLayers.forEach(({ layer, startColor, endColor }) => {
-      console.log(`🎨 Animating feature ${layer.feature.properties.id}: ${startColor} → ${endColor}`);
       animateFeatureColor(layer, startColor, endColor, 2000);
     });
 
     setTimeout(() => {
       if (mainFeatureLayer) {
-        console.log("✅ Adding red outline to mainFeature");
         addRedOutline(mainFeatureLayer);
       }
     }, 2200);
@@ -135,7 +128,6 @@
         }
       }).addTo(map);
 
-      console.log(`✅ Loaded ${changingLayers.length} changing features.`);
 
       map.fitBounds(geojsonLayer.getBounds());
     } catch (error) {
@@ -146,7 +138,6 @@
   function addRedOutline(layer) {
     const bounds = layer.getBounds();
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
-    console.log("✅ Red outline added.");
   }
    // Randomly determine change condition (Change or No change)
    function assignChangeCondition() {
@@ -164,7 +155,7 @@
     console.log("Current change condition:", changeCondition);  // Log to verify
 
     const requestData = {
-        participant_id: "12345",  // Replace with actual participant ID
+        participant_id: participantId,  // Replace with actual participant ID
         question_id: level,  // Use the level as the question ID
         user_answer: userAnswer ? "Yes" : "No",  // Store "Yes" or "No" based on user answer
         true_answer: trueAnswer,  // Store true answer ("Yes" or "No")

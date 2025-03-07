@@ -1,8 +1,12 @@
 <script>
     import { createEventDispatcher } from "svelte";
+
+    import Map from './Map.svelte' // Import the Maps component
+
     const dispatch = createEventDispatcher();
   
     let gender = "", education = "", age = "", experience = "";
+    let participantId = ""; 
   
     async function submitDemographics() {
       const data = { gender, education, age, experience, consent: true };
@@ -15,6 +19,8 @@
         });
   
         let result = await response.json();
+        participantId = result.participant_id;  // Store participant_id
+
         dispatch("next", result.participant_id);
       } catch (error) {
         console.error("Error:", error);
@@ -22,7 +28,11 @@
     }
   </script>
   
- 
+    {#if participantId}
+        <Maps {participantId} />
+    {/if}
+
+
   <div class="main-container">
     <div class="content-wrapper">
         <!-- Left Section: Intro & Description -->
