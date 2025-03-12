@@ -13,24 +13,28 @@
   let changeCondition = "No change";  // Default change condition
 
   // Handle nextStep event to update the participantId and move to the next step
-  function nextStep(participantId) {
-    if (step === 2) {
-      participantId = participantId;  // Set participantId
-    }
-    step++;  // Move to the next step
+  function nextStep(id) {
+  if (step === 2) {
+    participantId = id;  // Set participantId correctly
   }
+  step++;
+}
 
-  // Handle the next level
+exp
   function nextLevel(event) {
-    participantId = event.detail;
-    console.log("Received participantId in App.svelte:", participantId);
-
-    if (currentLevel < totalQuestions) {
-      currentLevel++;  // Move to the next level
-    } else {
-      step = 4;  // Move to the ThankYou step
-    }
+  // If the event has a changeCondition, update that variable.
+  if (event.detail && typeof event.detail === "object" && event.detail.changeCondition !== undefined) {
+    changeCondition = event.detail.changeCondition;
+    console.log("Received changeCondition in App.svelte:", changeCondition);
   }
+
+  // Advance the level without modifying participantId
+  if (currentLevel < totalQuestions) {
+    currentLevel++;
+  } else {
+    step = 4;
+  }
+}
 
   onMount(() => {
     // Listen for the 'next' event to update the participantId and move to the next level
