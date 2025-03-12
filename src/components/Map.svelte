@@ -144,7 +144,9 @@
 
     changeCondition = Math.random() < 0.5 ? "Change" : "No change";  // Randomly assign Change or No change
     console.log("Assigned change condition:", changeCondition);
-    dispatch('next', { changeCondition });  // Emit changeCondition to Survey.svelte
+    //dispatch('next', { changeCondition });  // Emit changeCondition to Survey.svelte
+    document.dispatchEvent(new CustomEvent('next', { detail: { changeCondition } }));
+
 
     document.addEventListener("resetAnimation", () => {
         animationStarted = false;
