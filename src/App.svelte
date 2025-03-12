@@ -21,26 +21,32 @@
 }
 
 
-  function nextLevel(event) {
-  // If the event has a changeCondition, update that variable.
-  if (event.detail && typeof event.detail === "object" && event.detail.changeCondition !== undefined) {
+function nextLevel(event) {
+  // If event.detail contains changeCondition, update it and do nothing else
+  if (event.detail && event.detail.changeCondition !== undefined) {
     changeCondition = event.detail.changeCondition;
     console.log("Received changeCondition in App.svelte:", changeCondition);
+    return;
   }
 
-  // Advance the level without modifying participantId
+  // Otherwise, treat it as a command to move to the next level
   if (currentLevel < totalQuestions) {
-    currentLevel++;
+    currentLevel++;  // Move to the next level
   } else {
-    step = 4;
+    step = 4;  // Move to the ThankYou step
   }
 }
 
-  onMount(() => {
-    // Listen for the 'next' event to update the participantId and move to the next level
-    document.addEventListener("next", nextLevel); 
-    console.log("Passing participantId:", participantId);
+
+onMount(() => {
+  document.addEventListener("updateChangeCondition", (event) => {
+    changeCondition = event.detail.changeCondition;
+    console.log("Received changeCondition in App.svelte:", changeCondition);
   });
+  document.addEventListener("next", nextLevel); 
+  console.log("Passing participantId:", participantId);
+});
+
 </script>
 
 <header class="header">
