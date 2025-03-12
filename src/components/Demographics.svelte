@@ -1,14 +1,20 @@
 <script lang="ts">
-    // No need for createEventDispatcher in Svelte 5
-    export let onNext: (participantId: number) => void; // Defining the type of onNext prop
+  // No need for createEventDispatcher in Svelte 5
+  export let onNext: (participantId: number) => void; // Defining the type of onNext prop
   
-    let gender = "";
-    let education = "";
-    let age = "";
-    let experience = "";
-    let consent = true;
+  let gender = "";
+  let education = "";
+  let age = "";
+  let experience = "";
+  let consent = true;
+  
+  async function submitDemographics() {
+    // Validate that all fields are filled
+    if (!gender || !education || !age || !experience) {
+      alert("Please fill out all fields before starting the test.");
+      return;
+    }
     
-    async function submitDemographics() {
     const data = { gender, education, age, experience, consent };
 
     try {
@@ -31,6 +37,7 @@
     }
   }
 </script>
+
   
   <div class="main-container">
     <div class="content-wrapper">
