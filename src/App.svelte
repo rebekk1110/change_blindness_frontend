@@ -20,7 +20,7 @@
   step++;
 }
 
-exp
+
   function nextLevel(event) {
   // If the event has a changeCondition, update that variable.
   if (event.detail && typeof event.detail === "object" && event.detail.changeCondition !== undefined) {
