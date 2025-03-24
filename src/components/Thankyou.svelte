@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>Thank You!</h1>
-    <p>Your responses have been recorded.</p>
+    <h1>Tusen takk!</h1>
+    <p>Dine svar har blitt lagret.</p>
+    
   </div>
   

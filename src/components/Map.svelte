@@ -1,22 +1,22 @@
 <script>
   import { onMount } from "svelte";
   import L from "leaflet";
+  import 'leaflet/dist/leaflet.css';
+
 
   export let level;
   export let changeCondition;
-  let map, geojsonLayer;
+
+  let map, geojsonLayer, geojsonLayerDemo;
   let changingLayers = [];
   let mainFeatureLayer = null;
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
   
-
-
   function getColor(color_id) {
     return color_id === 1 ? "#D3D3D3" : color_id === 2 ? "#A9A9A9" : "#696969";
   }
-
   function getGeoJSONUrl(level) {
     return `${import.meta.env.BASE_URL}map${level}.geojson`;
   }
@@ -34,7 +34,6 @@
                   (Math.round(g1 + (g2 - g1) * progress) << 8) + 
                   Math.round(b1 + (b2 - b1) * progress)).toString(16).slice(1)}`;
   }
-
   function animateFeatureColor(layer, startColor, endColor, duration, callback) {
     const startTime = performance.now();
     function step(currentTime) {
@@ -51,12 +50,10 @@
     }
     requestAnimationFrame(step);
   }
-
   function getRandomGrayColor(excludeColor) {
     const grayColors = ["#D3D3D3", "#A9A9A9", "#696969"];
     return grayColors.filter(color => color !== excludeColor)[Math.floor(Math.random() * 2)];
   }
-
   function startCountdown() {
     if (animationStarted) {
         console.warn("⚠ Animation already started, ignoring click.");
@@ -65,7 +62,8 @@
         
     animationStarted = true;
     showCountdown = true;
-    
+    document.dispatchEvent(new CustomEvent("startPressed"));
+
     let interval = setInterval(() => {
         
         if (countdown > 1) {
@@ -76,26 +74,25 @@
             startColorChange();
         }
     }, 1000);
-}
-
+  }
   function startColorChange() {
-    
-    if (changingLayers.length === 0) {
-      console.warn("⚠ No changing features found!");
-      return;
-    }
-
-    changingLayers.forEach(({ layer, startColor, endColor }) => {
-      animateFeatureColor(layer, startColor, endColor, 2000);
-    });
-
-    setTimeout(() => {
-      if (mainFeatureLayer) {
-        addRedOutline(mainFeatureLayer);
-      }
-    }, 2200);
+  if (changingLayers.length === 0) {
+    console.warn("⚠ No changing features found!");
+    return;
   }
 
+  changingLayers.forEach(({ layer, startColor, endColor }) => {
+    animateFeatureColor(layer, startColor, endColor, 2000);
+  });
+
+  setTimeout(() => {
+    if (mainFeatureLayer) {
+      addRedOutline(mainFeatureLayer);
+      // Dispatch an event to indicate the red square has been shown
+      document.dispatchEvent(new CustomEvent("redSquareShown"));
+    }
+  }, 2200);
+  }
   async function loadGeoJSON(level) {
     try {
       console.log(`🌍 Loading GeoJSON for level ${level}...`);
@@ -136,24 +133,42 @@
     const bounds = layer.getBounds();
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
   }
-
+  
   
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);
     loadGeoJSON(level);
-
-    changeCondition = Math.random() < 0.5 ? "Change" : "No change";  // Randomly assign Change or No change
+    
+    changeCondition = Math.random() < 0.5 ? "Change" : "No change";  
     console.log("Assigned change condition:", changeCondition);
     //dispatch('next', { changeCondition });  // Emit changeCondition to Survey.svelte
     document.dispatchEvent(new CustomEvent('next', { detail: { changeCondition } }));
-
 
     document.addEventListener("resetAnimation", () => {
         animationStarted = false;
         showCountdown = false;
         countdown = 3;
+      
     });
+  
+      // Create and add the legend control in the top left corner
+      const legendControl = L.control({ position: 'topleft' });
+      legendControl.onAdd = function(map) {
+        // Create a container for the legend (Leaflet will append this container inside the map)
+        const div = L.DomUtil.create('div', 'info legend');
+        div.innerHTML = `
+          <h4 style="margin-bottom:5px;">Klasser</h4>
+          <i style="background: ${getColor(1)}; width:18px; height:18px; display:inline-block; margin-right:5px;"></i> Lav<br>
+          <i style="background: ${getColor(2)}; width:18px; height:18px; display:inline-block; margin-right:5px;"></i> Medium<br>
+          <i style="background: ${getColor(3)}; width:18px; height:18px; display:inline-block; margin-right:5px;"></i> Høy<br>
+        `;
+        return div;
+      };
+      legendControl.addTo(map);
+
+
 });
+
 
   $: if (level) {
     console.log(`🔄 Level changed to ${level}, reloading GeoJSON.`);
@@ -164,20 +179,19 @@
 <div class="map-container">
   <div id="map">
     {#if showCountdown}
-      <p class="countdown-overlay">Color change in {countdown}...</p>
+      <p class="countdown-overlay">{countdown}...</p>
     {/if}
-  
- 
+
 </div>
+
   <div class="description-container">
-    <h3>Task Instructions</h3>
     <p>
-      Carefully observe the map. Some regions may <strong>change color</strong>.  
-      After the change, a <strong>red square</strong> will highlight one region.  
-      Your task is to determine <strong>if that region changed color</strong>.  
+      Observer kartet, noen regioner vil <strong>skifte farge</strong> etter du har trykket start.  
+     Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region.  
+      <!-- Your task is to determine <strong>if that region changed color</strong>.   -->
     </p>
     <p class="warning-text">
-      ⚠ <strong>Do not refresh the page</strong>, or you will have to restart the survey.
+      ⚠ <strong>Ikke refresh siden</strong>, da starter studien på nytt.
     </p>
     
   </div>
@@ -187,16 +201,17 @@
       startCountdown();
   }} 
   disabled={animationStarted}>
-   {animationStarted ? "Animation started" : "Start Animation"}
+   {animationStarted ? "Fargeskifte ferdig" : "Start"}
 </button>
 </div>
+
 <style>
   .map-container {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 5px;
   }
   h3{
     margin-block-start: 0em;
@@ -212,21 +227,21 @@
   }
  .description-container {
     background: #eef1f6;
-    padding: 20px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
     max-width: 580px;
+
     border-radius: 6px;
     margin-top: 10px;
     text-align: center;
     font-size: 14px;
     margin-bottom: 5px;
     font-size: 14px;
+    align-items: center;
+    text-emphasis: none;
+    max-width: 460px;
   } 
-  .description-container p {
-    max-width: 550px; /* Adjust as needed */
-}
-
 
 
   .countdown-overlay {

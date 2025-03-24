@@ -48,88 +48,100 @@
     });
   }
 </script>
+<div class="content-wrapper">
+  <div class="survey-container">
+    <p class="progress-text">Question {level} of {totalQuestions}</p>
+  <div class="task-description">
 
-<div class="survey-container">
-  <p class="progress-text">Question {level} of {totalQuestions}</p>
-<div class="task-description">
+   <p>
+          Du skal se etter forandringer i kartet til venstre.
+          
 
-  <p>  Please carefully analyze the highlighted region in the map before answering the questions below. 
-  Your response should be based on your best judgment. 
-  There is no right or wrong answer—just answer as accurately as you can </p>
-
-</div>
-
-
-  <div class="question-box">
-
-    <p class="question-text"> Did the highlighted region change color?</p>
-    <div class="radio-group">
-      <label>
-        <input type="radio" bind:group={response} value="Change" required />
-        Yes, the region changed color 
-      </label>
-      <label>
-        <input type="radio" bind:group={response} value="No Change" required />
-        No, the region remained the same 
-      </label>
-    </div>
+        </p>
+        <ol>
+          <li>Trykk <strong>start</strong> for å se endringer i kartet.</li>
+          <li>Svar på de to spørsmålene under.</li>
+        </ol>
+        <p>Prøv å svar så korrekt? som du kan. </p>
   </div>
 
-  <div class="question-box">
-    <p class="question-text">How confident are you in your answer?</p>
-    <div class="confidence-container">
-      <label>
-        <input type="radio" bind:group={confidence} value="5" required />
-        <span>Very Confident</span>
-      </label>
-      <label>
-        <input type="radio" bind:group={confidence} value="4" required />
-        <span>Somewhat Confident</span>
-      </label>
-      <label>
-        <input type="radio" bind:group={confidence} value="3" required />
-        <span>Neutral</span>
-      </label>
-      <label>
-        <input type="radio" bind:group={confidence} value="2" required />
-        <span>Somewhat Unconfident</span>
-      </label>
-  
-      <label>
-        <input type="radio" bind:group={confidence} value="1" required />
-        <span>Very Unconfident</span>
-      </label>
 
+    <div class="question-box">
+        <p class="question-text">Har regionen i den rød rammen skiftet farge?</p>
+        <div class="radio-group">
+          <label>
+            <input type="radio" bind:group={response} value="Change" required />
+            Ja, regionen endret farge
+          </label>
+          <label>
+            <input type="radio" bind:group={response} value="No Change" required />
+            Nei, hadde samme farge
+          </label>
+        </div>
+      </div>
+
+    <div class="question-box">
+      <p class="question-text">Hvor sikker er du i ditt svar?</p>
+      <div class="confidence-container">
+        <label>
+          <input type="radio" bind:group={confidence} value="5" required />
+          <span>Veldig sikker</span>
+        </label>
+        <label>
+          <input type="radio" bind:group={confidence} value="4" required />
+          <span>Noe sikker</span>
+        </label>
+        <label>
+          <input type="radio" bind:group={confidence} value="3" required />
+          <span>Nøytral</span>
+        </label>
+        <label>
+          <input type="radio" bind:group={confidence} value="2" required />
+          <span>Noe usikker</span>
+        </label>
+        <label>
+          <input type="radio" bind:group={confidence} value="1" required />
+          <span>Veldig usikker</span>
+        </label>
+      </div>
     </div>
-  </div>
-  <div class="button">  
-    <div class="submit-container">
-      <button class="submit-btn" on:click={submitAndNext}>
-        {#if submitted}
-        <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        {:else}
-          Submit and Next
-        {/if}
-      </button>
+    <div class="button">  
+      <div class="submit-container">
+        <button class="submit-btn" on:click={submitAndNext}>
+          {#if submitted}
+          <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          {:else}
+            Send inn og fortsett på neste oppgave
+          {/if}
+        </button>
+      </div>
     </div>
   </div>
 </div>
   
 
 <style>
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+    flex: 1;
+  }
+
   .survey-container {
-  margin-top: 20px;
-  flex: 1;
-  min-width: 440px;
-  max-width: 500px;
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-.submit-btn {
+    min-width: 440px;
+    max-width: 500px;
+    margin-top: 5px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .submit-btn {
     padding: 10px 15px;
     font-size: 16px;
     background-color: #28a745; /* Green */
@@ -143,7 +155,6 @@
     justify-content: center;
     min-width: 160px;
     font-size: 13px;
-
   }
 
   .check-icon {
@@ -170,7 +181,7 @@
 
   /* ✅ Make radio buttons & labels more compact */
  
-  .confidence-container {
+.confidence-container {
   display: flex;
   flex-direction: column;
   padding-left: 20px;
@@ -185,21 +196,19 @@
  
 }
 
-  .radio-group{
-    display: flex;
-    justify-content: center;
-    flex-direction:row;
+.radio-group{
+  display: flex;
+  justify-content: center;
+  flex-direction:row;
 
-    gap: 15px;
-  }
-  .question-text {
+  gap: 15px;
+}
+.question-text {
   font-weight: bold; 
   font-size: 16px; 
   margin-bottom: 8px;
   margin-top: 8px;
 }
-
-
 
 .submit-container {
   display: flex;
@@ -211,18 +220,25 @@
 .task-description {
   background: #eef1f6; /* ✅ Light background for contrast */
   padding: 12px;
+  padding-left: 30;
+  padding-right: 30;
   border-radius: 6px;
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   /* font-weight: bold; */
   margin-bottom: 15px;
 }
-
-
-
-
-
-
+.task-description p{
+  width: 85%; /* or any width less than 100% */
+  margin: 0 auto;
+  padding: 0px;
+}
+.task-description ol{
+  width: 75%; 
+  text-align: left;
+  margin: 0 auto;
+  padding: 0px;
+}
 
 
 

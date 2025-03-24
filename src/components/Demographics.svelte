@@ -44,15 +44,14 @@
       <!-- Left Section: Intro & Description -->
       <div class="left-section">
         <div class="intro-section">
-          <h1>Welcome to the Experiment</h1>
+          <h1>Velkommen til kart-studien</h1>
           <p>
-            Thank you for participating in this study on <strong>change blindness in choropleth maps</strong>.
-            This experiment consists of several tasks where you need to detect changes in the presented maps.
+            Takk for at du deltar til denne kartstudien for for min masteroppgave. 
+            Dette ekperimentet tar <strong>ca. 3 minutter</strong> og består av én demonstrasjonsoppgave og <strong>3 oppgaver</strong> .
           </p>
-          <h3>Test Instructions</h3>
+          <h3>Instruksjoner</h3>
           <p>
-            In this test, you will be shown maps with **changing elements**. Your task is to determine whether a change has occurred. The test consists of three rounds with increasing complexity.
-            Please pay close attention and answer as accurately as possible.
+            Fyll inn deltakerinformasjon og start demostrasjonsoppgaven. 
           </p>
         </div>
       </div>
@@ -60,45 +59,56 @@
       <!-- Right Section: Survey -->
       <div class="right-section">
         <div class="survey-container">
-          <h2>Participant Information</h2>
+          <h2>Deltakerinformasjon</h2>
           <form on:submit|preventDefault={submitDemographics}>
             <div class="form-group">
-              <label for="gender">Gender</label>
+              <label for="gender">Kjønn</label>
               <select id="gender" bind:value={gender}>
-                <option value="">Select...</option>
-                <option value="female">Female</option>
-                <option value="male">Male</option>
+                <option value="">Velg...</option>
+                <option value="female">Kvinne</option>
+                <option value="male">Mann</option>
                 <option value="non-binary">Non-binary</option>
                 <option value="prefer-not">Prefer not to say</option>
               </select>
             </div>
-  
+
             <div class="form-group">
-              <label for="education">Education Level</label>
+              <label for="age">Alder</label>
+              <input id="age" type="number" bind:value={age} min="1" placeholder="Skriv din alder" />
+            </div>
+
+            <div class="form-group">
+              <label for="education">Høyeste utdanningsnivå</label>
               <select id="education" bind:value={education}>
-                <option value="">Select...</option>
-                <option value="high-school">High School</option>
-                <option value="bachelor">Bachelor's Degree</option>
-                <option value="master">Master's Degree</option>
+                <option value="">Velg...</option>
+                <option value="high-school">VGS</option>
+                <option value="bachelor">Bachelor</option>
+                <option value="master">Master</option>
                 <option value="phd">PhD</option>
               </select>
             </div>
   
-            <div class="form-group">
-              <label for="age">Age</label>
-              <input id="age" type="number" bind:value={age} min="1" placeholder="Enter your age" />
-            </div>
+   
   
             <div class="form-group">
-              <label for="experience">Professional Experience with Maps</label>
+              <label for="experience"> Studerer du eller jobber med kart?</label>
               <select id="experience" bind:value={experience}>
-                <option value="">Select...</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="">Velg...</option>
+                <option value="yes">Ja</option>
+                <option value="no">Nei</option>
               </select>
             </div>
   
-            <button class="btn-primary" type="submit">Start Test</button>
+        <!--     <button on:click={() => {
+              // This would trigger a change in your app-level state.
+              // For example, if you’re using a custom event or a store, dispatch an event.
+              // If using a parent callback, call that callback to change the step.
+              window.dispatchEvent(new CustomEvent("continueRealSurvey"));
+            }}>
+            Continue to Real Survey
+          </button> -->
+          <button class="btn-primary" type="submit">Start Demostrasjon</button>
+
           </form>
         </div>
       </div>
@@ -114,6 +124,7 @@
     margin: 50px auto;
     font-family: 'Arial', sans-serif;
     color: #333;
+    background-color: white;
 }
 
 /* Flexbox Layout */
