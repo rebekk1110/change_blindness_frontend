@@ -52,12 +52,18 @@
       <p class="progress-text">Oppgave: Demostrasjon </p>
       
       <div class="task-description">
+
         <p>
-          Du skal se etter forandringer i kartet til venstre. Noen av regionene vil endre farge.
-          Oppgaven er delt i to deler. 1. Start aniamasjonen for å se endringer i kartet. 2. Svar på de to spørsmålene under som omhandler endringene i kartet. 
-          Prøv å svar så -- som du kan. 
-        </p>
-      </div>
+               Du skal se etter forandringer i kartet til venstre.
+               
+     
+             </p>
+             <ol>
+               <li>Trykk <strong>start</strong> for å se endringer i kartet.</li>
+               <li>Svar på de to spørsmålene under.</li>
+             </ol>
+             <p>Prøv å svar så korrekt? som du kan. </p>
+       </div>
       <div class="question-box">
         <p class="question-text">Har regionen i den rød rammen skiftet farge?</p>
         <div class="radio-group">

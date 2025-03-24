@@ -8,7 +8,7 @@
   import TestPage from "./components/TestPage.svelte";
   import Popup from "./components/Popup.svelte";  // Import our Popup component
 
-  let step = 3;  // Step tracker
+  let step = 1;  // Step tracker
   let currentLevel =0
   let totalQuestions = 3;
   let participantId;
@@ -113,14 +113,14 @@
         {#if showPopup1}
         <Popup
           message="2. Trykk på <strong>Start</strong> for starte fargeskiftet. Obs: du kan bare starte én gang"
-          style="top: 530px; left: 42%; transform: translateX(-50%);"
+          style="top: 530px; left: 49%; transform: translateX(-50%);"
         
         />
         {/if}
         {#if showPopup2}
           <Popup
             message="3. Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region"
-            style="top: 50%; left: -4%; transform: translateY(-50%);"
+            style="top: 60%; left: -4%; transform: translateY(-50%);"
           />
         {/if}
         {#if showPopup3}

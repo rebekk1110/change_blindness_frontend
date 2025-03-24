@@ -50,7 +50,7 @@
 </script>
 <div class="content-wrapper">
   <div class="survey-container">
-    <p class="progress-text">Question {level} of {totalQuestions}</p>
+    <p class="progress-text">Oppgave {level} av {totalQuestions}</p>
   <div class="task-description">
 
    <p>
@@ -216,28 +216,6 @@
   margin-top: 20px;
   margin-bottom: 6px;
   
-}
-.task-description {
-  background: #eef1f6; /* ✅ Light background for contrast */
-  padding: 12px;
-  padding-left: 30;
-  padding-right: 30;
-  border-radius: 6px;
-  text-align: left;
-  font-size: 14px;
-  /* font-weight: bold; */
-  margin-bottom: 15px;
-}
-.task-description p{
-  width: 85%; /* or any width less than 100% */
-  margin: 0 auto;
-  padding: 0px;
-}
-.task-description ol{
-  width: 75%; 
-  text-align: left;
-  margin: 0 auto;
-  padding: 0px;
 }
 
 
