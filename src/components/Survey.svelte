@@ -10,15 +10,14 @@
   let submitted = false;
 
   function submitAndNext() {
-    if (!response) {
-      alert("🚨 Please select whether you noticed a change before submitting!");
-      return;
-    }
-    if (!confidence) {
-      alert("🚨 Please select a confidence level before submitting!");
-      return;
-    }
-
+  if (!response) {
+    alert("🚨 Vennligst velg om du la merke til en endring");
+    return;
+  }
+  if (!confidence) {
+    alert("🚨 Vennligst velg hvor sikker du er");
+    return;
+  }
     const data = {
       participant_id: participantId,
       question_id: `Q${level}`,
@@ -43,7 +42,24 @@
         response = "";
         confidence = "";
 
-        document.dispatchEvent(new CustomEvent("next"));
+        if (level < totalQuestions) {
+         document.dispatchEvent(new CustomEvent("next"));
+      } else {
+         // Last question: mark the study as completed.
+         fetch("https://change-blindness-web.onrender.com/complete", {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify({ participant_id: participantId })
+         })
+         .then(() => {
+             console.log("Study marked as complete!");
+             // Optionally, trigger a transition or display a thank-you message.
+         })
+         .catch(error => {
+             console.error("Error marking study as complete:", error);
+         });
+      }
+
       }, 1000);
     });
   }

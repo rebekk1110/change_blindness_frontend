@@ -6,17 +6,15 @@
       dispatch("next");
     }
   </script>
-  
   <div class="modal">
     <div class="modal-content">
-      <h2>Consent Agreement</h2>
+      <h2>Samtykkeskjema</h2>
       <p>
-        By participating in this survey, you agree that your responses will be stored and used for research purposes.
+        Ved å delta i denne undersøkelsen godtar du at svarene dine blir lagret og brukt til forskningsformål.
       </p>
-      <button class="btn" on:click={agree}>I Agree</button>
+      <button class="btn" on:click={agree}>Jeg godtar</button>
     </div>
   </div>
-  
   <style>
     .modal {
       position: fixed;
