@@ -53,11 +53,14 @@
          })
          .then(() => {
              console.log("Study marked as complete!");
+             document.dispatchEvent(new CustomEvent("next"));
              // Optionally, trigger a transition or display a thank-you message.
          })
+
          .catch(error => {
              console.error("Error marking study as complete:", error);
          });
+
       }
 
       }, 1000);
