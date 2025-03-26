@@ -9,7 +9,7 @@
   import Popup from "./components/Popup.svelte"; 
 
 
-  let step = 3;  // Step tracker
+  let step = 1;  // Step tracker
   let currentLevel =0
   let totalQuestions = 3;
   let participantId;
