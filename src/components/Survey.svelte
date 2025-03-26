@@ -56,8 +56,10 @@
         console.log("Response submitted:", result.message);
         submitted = true;
         setTimeout(() => {
+          console.log("⏳ Resetting button...");
+
           submitted = false;
-          // Reset fields for next question/level
+          document.dispatchEvent(new CustomEvent("resetAnimation"));
           change_response = "";
           change_confidence = "";
           color_response = "";

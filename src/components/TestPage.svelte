@@ -151,7 +151,7 @@
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           {:else}
-            Start på spørreskjema
+            Gå videre til spørreskjema
           {/if}
         </button>
       </div>
