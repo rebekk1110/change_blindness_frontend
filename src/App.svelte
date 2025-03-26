@@ -123,7 +123,7 @@
         {#if showPopup2}
           <Popup
             message="3. Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region"
-            style="top: 60%; left: -4%; transform: translateY(-50%);"
+            style="top: 70%; left: 10%; transform: translateY(-50%);"
           />
         {/if}
         {#if showPopup3}

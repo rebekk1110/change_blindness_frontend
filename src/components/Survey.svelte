@@ -147,23 +147,23 @@
           <p class="confidence-question">Hvor sikker er du på fargevalget ditt?</p>
           <div class="confidence-options">
             <label class="option">
-              <input type="radio" bind:group={change_confidence} value="5" required />
+              <input type="radio" bind:group={color_confidence} value="5" required />
               <span class="option-text">Veldig sikker</span>
             </label>
             <label class="option">
-              <input type="radio" bind:group={change_confidence} value="4" required />
+              <input type="radio" bind:group={color_confidence} value="4" required />
               <span class="option-text">Noe sikker</span>
             </label>
             <label class="option">
-              <input type="radio" bind:group={change_confidence} value="3" required />
+              <input type="radio" bind:group={color_confidence} value="3" required />
               <span class="option-text">Nøytral</span>
             </label>
             <label class="option">
-              <input type="radio" bind:group={change_confidence} value="2" required />
+              <input type="radio" bind:group={color_confidence} value="2" required />
               <span class="option-text">Noe usikker</span>
             </label>
             <label class="option">
-              <input type="radio" bind:group={change_confidence} value="1" required />
+              <input type="radio" bind:group={color_confidence} value="1" required />
               <span class="option-text">Veldig usikker</span>
             </label>
           </div>
