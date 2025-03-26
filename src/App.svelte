@@ -6,13 +6,16 @@
   import Survey from "./components/Survey.svelte";
   import ThankYou from "./components/Thankyou.svelte";
   import TestPage from "./components/TestPage.svelte";
-  import Popup from "./components/Popup.svelte";  // Import our Popup component
+  import Popup from "./components/Popup.svelte"; 
 
-  let step = 1;  // Step tracker
+
+  let step = 3;  // Step tracker
   let currentLevel =0
   let totalQuestions = 3;
   let participantId;
   let changeCondition = "No change";
+  let originalColor; 
+  
   
   // For showing the popup after the red square is drawn
   let showPopup0 = true; 
@@ -85,7 +88,7 @@
 
 <div class="max-y">
 <header class="header">
-  <h1>Change Blindness Study</h1>
+  <h1>Master spørreskjema kartografi</h1>
 </header>
 
 <main class="survey-layout">
@@ -106,7 +109,7 @@
         {#if showPopup0}
         <Popup
           message="1.Les instruksjonen for oppgaven"
-          style="top: 50px; right: 21%; transform: translateX(-50%);"
+          style="top: 0px; right: 7%; transform: translateX(-50%);"
         
         />
         {/if}
@@ -130,7 +133,7 @@
         />
         {/if}
         <div class="map-container">
-          <Map level={currentLevel} changeCondition={changeCondition} />
+          <Map level={currentLevel} changeCondition={changeCondition} bind:originalColor />
         </div>
         <div class="survey-container">
           <TestPage {step} on:next={nextStep} />
@@ -142,7 +145,7 @@
         <Map level={currentLevel} changeCondition={changeCondition} />
       </div>
       <div class="survey-container">
-        <Survey participantId={participantId} changeCondition={changeCondition} level={currentLevel} totalQuestions={totalQuestions} />
+        <Survey participantId={participantId} changeCondition={changeCondition} level={currentLevel} totalQuestions={totalQuestions} originalColor={originalColor} />
       </div>
     </div>
     {:else if step === 5}
@@ -152,7 +155,7 @@
 </main>
 
 <footer class="footer">
-  <p>© 2025 Change Blindness Study</p>
+  <p>© 2025 </p>
 </footer>
 
 </div>

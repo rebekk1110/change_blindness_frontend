@@ -6,6 +6,7 @@
 
   export let level;
   export let changeCondition;
+  export let originalColor;
 
   let map, geojsonLayer, geojsonLayerDemo;
   let changingLayers = [];
@@ -116,8 +117,11 @@
               endColor: getRandomGrayColor(getColor(feature.properties.color_id))
             });
           }
+          // When a feature is marked as the main feature, update originalColor.
           if (feature.properties.mainFeature) {
             mainFeatureLayer = layer;
+            originalColor = getColor(feature.properties.color_id);
+            console.log("Original color set to", originalColor);
           }
         }
       }).addTo(map);
