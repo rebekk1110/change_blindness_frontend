@@ -1,8 +1,11 @@
-<script lang="ts">
+<script >
   // Import global production CSS so that the appearance matches your original pages.
   import "../app.css";
   import Map from "./Map.svelte";
   
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
+
   export let step;
   // Dummy values for test mode.
   let currentLevel = 0;
@@ -36,7 +39,7 @@
       color_response="";
       change_response="";
       change_confidence = "";
-      document.dispatchEvent(new CustomEvent("continueRealSurvey"));
+      dispatch("next");
     }, 1000);
   }
 
@@ -151,7 +154,7 @@
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           {:else}
-            Gå videre til spørreskjema
+            Neste
           {/if}
         </button>
       </div>

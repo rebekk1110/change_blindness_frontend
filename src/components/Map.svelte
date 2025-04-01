@@ -3,7 +3,6 @@
   import L from "leaflet";
   import 'leaflet/dist/leaflet.css';
 
-
   export let level;
   export let changeCondition;
   export let originalColor;
@@ -21,7 +20,6 @@
   function getGeoJSONUrl(level) {
     return `${import.meta.env.BASE_URL}map${level}.geojson`;
   }
-
   function interpolateColor(color1, color2, progress) {
     const hex = (color) => parseInt(color.slice(1), 16);
     const r1 = (hex(color1) >> 16) & 0xff,
@@ -96,7 +94,6 @@
   }
   async function loadGeoJSON(level) {
     try {
-      console.log(`🌍 Loading GeoJSON for level ${level}...`);
       let response = await fetch(getGeoJSONUrl(level));
       let data = await response.json();
       if (geojsonLayer) geojsonLayer.clearLayers();
@@ -121,7 +118,6 @@
           if (feature.properties.mainFeature) {
             mainFeatureLayer = layer;
             originalColor = getColor(feature.properties.color_id);
-            console.log("Original color set to", originalColor);
           }
         }
       }).addTo(map);
@@ -137,7 +133,6 @@
     const bounds = layer.getBounds();
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
   }
-  
   
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);
@@ -174,10 +169,10 @@
 });
 
 
-  $: if (level) {
-    console.log(`🔄 Level changed to ${level}, reloading GeoJSON.`);
-    loadGeoJSON(level);
-  }
+  $: console.log("Map level prop is:", level);
+  $:  loadGeoJSON(level);
+
+
 </script>
 
 <div class="map-container">
@@ -188,24 +183,24 @@
 
 </div>
 
-  <div class="description-container">
+<!--   <div class="description-container">
     <p>
       Observer kartet, noen regioner vil <strong>skifte farge</strong> etter du har trykket start.  
-     Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region.  
-      <!-- Your task is to determine <strong>if that region changed color</strong>.   -->
+     Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region.   
     </p>
     <p class="warning-text">
       ⚠ <strong>Ikke refresh siden</strong>, da starter studien på nytt.
     </p>
-    
-  </div>
+  </div> -->
+
+
   <button class="start-animation-btn" 
   on:click={() => {
       console.log("🟢 Start Animation button clicked!"); 
       startCountdown();
   }} 
   disabled={animationStarted}>
-   {animationStarted ? "Fargeskifte ferdig" : "Start"}
+   {animationStarted ? "Fargeskifte ferdig" : "Start animasjon"}
 </button>
 </div>
 

@@ -1,0 +1,151 @@
+/* MAIN*/
+.main-layout{
+flex: 1;
+overflow-y: hidden;
+overflow-x: hidden;
+}
+
+.main-container{
+display: flex;
+justify-content: center;
+flex-wrap: nowrap;
+flex-direction: row;
+gap: 10px; 
+column-gap: 5%;
+width: 100%;
+margin: 20px;
+}
+
+
+
+.test-container{
+display: flex;
+justify-content: center;
+margin: 0;
+flex-wrap: nowrap;
+flex-direction: row;
+gap: 10px; 
+column-gap: 5%;
+width: 100%;
+margin: 0 20px;
+}
+
+.test-banner{
+justify-content: center;
+padding: 10px;
+background: #e6c5c3;
+text-align: center;
+margin-top: 10px;
+border-radius: 6px;
+font-size: 13px;
+color: #441311
+}
+/*
+.test-container{
+max-width: 1300px;
+position: relative;
+margin-top: 20px;
+min-width: 1140px;
+background-color: #f5f7fa;
+position: relative;
+padding: 30px;
+border-radius: 8px;
+}
+*/
+
+/* Test */
+.break{
+width: 100%;
+flex-basis: 100%;
+height: 1px;
+padding: 0px 5px; 
+font-size: 13px;
+}
+
+/* REAL extra */
+
+
+/* TEST extra */
+
+
+.underPop1{
+    
+}
+
+/* Survey Bigger */
+.question-box {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    text-align: center;
+    }
+    
+
+/* SURVEY DETAILS */
+  .radio-group,
+  .confidence-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .confidence-container label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .btn {
+    font-size: 14px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .btn:hover {
+    background: #0056b3;
+  }
+  
+  .secondary-btn {
+    background: #6c757d;
+  }
+  .secondary-btn:hover {
+    background: #545b62;
+  }
+  .task-description {
+    position: relative;
+    background: #eef1f6; /* ✅ Light background for contrast */
+    padding: 12px;
+    z-index: 4;
+    padding-left: 30;
+    padding-right: 30;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 14px;
+    /* font-weight: bold; */
+    margin-bottom: 15px;
+  }
+  .task-description p{
+    width: 90%; 
+    margin: 0 auto;
+    padding: 0px;
+  }
+  .task-description ol{
+    width: 75%; 
+    text-align: left;
+    margin: 0 auto;
+    padding: 0px;
+  }

@@ -39,40 +39,43 @@
 </script>
 
   
-  <div class="main-container">
+  <div class="mainn-container">
     <div class="content-wrapper">
       <!-- Left Section: Intro & Description -->
       <div class="left-section">
         <div class="intro-section">
-          <h1>Velkommen til kart-studien</h1>
+          <h1>Velkommen til kart-animasjon eksperimentet</h1>
           <p>
-            Takk for at du deltar til denne kartstudien for for min masteroppgave. 
-            Dette ekperimentet tar <strong>ca. 3 minutter</strong> og består av én demonstrasjonsoppgave og <strong>3 oppgaver</strong> .
+            <!-- Takk for at du deltar til denne kartstudien for for min masteroppgave. <br> -->
+            Dette eksperimentet tar <strong>ca. 3 minutter</strong> og består av <strong>én demonstrasjonsoppgave</strong> og <strong>3 oppgaver</strong>.
+            <br>
+            <br>
+            Vi tester din evne til å oppdage endringer i animerte kart. Lykke til - din innsats er verdifull!
           </p>
-          <h3>Instruksjoner</h3>
+       <!--    <h3>Instruksjoner</h3>
           <p>
             Fyll inn deltakerinformasjon og start demostrasjonsoppgaven. 
-          </p>
+          </p> -->
         </div>
       </div>
   
       <!-- Right Section: Survey -->
       <div class="right-section">
-        <div class="survey-container">
+        <div class="surveyy-container">
           <h2>Deltakerinformasjon</h2>
-          <form on:submit|preventDefault={submitDemographics}>
+          <div class= "demograph-content">
+            <form on:submit|preventDefault={submitDemographics}>
             <div class="form-group">
               <label for="gender">Kjønn</label>
               <select id="gender" bind:value={gender}>
                 <option value="">Velg...</option>
                 <option value="female">Kvinne</option>
                 <option value="male">Mann</option>
-                <option value="non-binary">Non-binary</option>
-                <option value="prefer-not">Prefer not to say</option>
+                <option value="prefer-not">Annet</option>
               </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group age">
               <label for="age">Alder</label>
               <input id="age" type="number" bind:value={age} min="1" placeholder="Skriv din alder" />
             </div>
@@ -87,9 +90,7 @@
                 <option value="phd">PhD</option>
               </select>
             </div>
-  
-   
-  
+
             <div class="form-group">
               <label for="experience"> Studerer du eller jobber med kart?</label>
               <select id="experience" bind:value={experience}>
@@ -98,19 +99,14 @@
                 <option value="no">Nei</option>
               </select>
             </div>
+         
   
-        <!--     <button on:click={() => {
-              // This would trigger a change in your app-level state.
-              // For example, if you’re using a custom event or a store, dispatch an event.
-              // If using a parent callback, call that callback to change the step.
-              window.dispatchEvent(new CustomEvent("continueRealSurvey"));
-            }}>
-            Continue to Real Survey
-          </button> -->
-          <button class="btn-primary" type="submit">Start Demostrasjon</button>
-
+            <div class="button-class">
+            <button class="btn-primary" type="submit">Neste</button>
+            </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -119,104 +115,142 @@
   <style>
 /* General Layout */
 /* General Layout */
-.main-container {
-    max-width: 1000px;
-    margin: 50px auto;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    background-color: white;
-}
+.mainn-container {
+  max-width: 1300px;
+  margin: 50px auto;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  gap: 10px; 
+  padding: 30px;
 
+  border-radius: 8px;
+}
+.main-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 10px; 
+  column-gap: 5%;
+  width: 100%;
+  max-width: 1300px;
+  margin-top: 20px;
+  min-width: 1140px;
+  background-color: #f5f7fa;
+  position: relative;
+  padding: 30px;
+  border-radius: 8px;
+}
 /* Flexbox Layout */
 .content-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 70px;
+    align-items: center;
+    gap: 90px;
 }
 
 /* Left Section */
 .left-section {
     flex: 1;
-    min-width: 400px;
+    min-width: 500px;
+    max-width: 550px;
 }
 
 /* Right Section (Survey) */
 .right-section {
     flex: 1;
-    min-width: 440px;
+    min-width: 360px;
+    max-width: 440px;
+  
 }
 
-/* Intro Section */
 .intro-section {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .intro-section h1 {
-    font-size: 24px;
-    color: #007BFF;
-    margin-bottom: 10px;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 15px;
 }
 
 .intro-section p {
     font-size: 16px;
     line-height: 1.6;
+    color: #555;
 }
-
-
-
 /* Survey Form */
-.survey-container {
+.surveyy-container {
+    color: #3f3f3f;
     background: white;
-    padding: 20px;
+    padding: 25px;
+    padding-left: 10%;
+    padding-right: 10%;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    margin-left: 40px;
+  
 }
 
-.survey-container h2 {
-    text-align: center;
-    color: #333;
+.demograph-content{
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+
 }
 
-/* Form Groups */
 .form-group {
-    margin-bottom: 15px;
-    margin-left: 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+.form-group.age {
+  margin-bottom: 15px;
+  margin-left: 10px;
+  width: 90%;
 }
 
 label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 input, select {
-    width: 90%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    
+  width: 95%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #999898;
+}
+.button-class{
+  align-items: end;
+  justify-self: end;
+  margin-right: 35px;
+  
+
 }
 .btn-primary {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+   
 }
 .btn-primary:hover {
-    background: #0056b3;
+  background: #0056b3;
 }
 
 </style>

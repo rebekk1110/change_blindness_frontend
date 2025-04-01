@@ -2,27 +2,22 @@
   import { onMount } from "svelte";
   import Consent from "./components/Consent.svelte";
   import Demographics from "./components/Demographics.svelte";
-  import Map from "./components/Map.svelte";
-  import Survey from "./components/Survey.svelte";
   import ThankYou from "./components/Thankyou.svelte";
-  import TestPage from "./components/TestPage.svelte";
-  import Popup from "./components/Popup.svelte"; 
+  import TestFiller from "./components/TestFiller.svelte";
+  import MapSurveyTest from "./components/MapSurveyTest.svelte"
+  import MapSurvey from "./components/MapSurvey.svelte"
+  import Progress from "./components/Progress.svelte";
+  import SurveyFiller from "./components/SurveyFiller.svelte";
+  import FinaleFiller from "./components/FinaleFiller.svelte";
 
-
-  let step = 1;  // Step tracker
-  let currentLevel =0
+  let step = 7;  // Step tracker
+  let level= 1;
   let totalQuestions = 3;
   let participantId;
   let changeCondition = "No change";
   let originalColor; 
-  
-  
-  // For showing the popup after the red square is drawn
-  let showPopup0 = true; 
-  let showPopup1 = true;   // Initially instruct the user to click Start
-  let showPopup2 = false;  // "Watch carefully..." message
-  let showPopup3 = false;  // "Red square appears..." message
 
+  
   function nextStep(id) {
     if (step === 2) {
       participantId = id;
@@ -31,125 +26,53 @@
   }
 
   function nextLevel(event) {
-    if (step==3 ){
-      currentLevel= 0
-    }
     if (event.detail && event.detail.changeCondition !== undefined) {
       changeCondition = event.detail.changeCondition;
       console.log("Received changeCondition in App.svelte:", changeCondition);
-      return;
-    }
-    if (currentLevel < totalQuestions) {
-      currentLevel++;
-    } 
+     return; }
+    if (level < totalQuestions) {
+      level++; } 
     else{
-      step=5
-
+      step=7
     }
   }
-  
-  function goToTestMode() {
-    console.log("Nå kjører goToTestMode")
-    step = 3;
-    currentLevel=0
-    
-  }
- 
 
   onMount(() => {
     document.addEventListener("updateChangeCondition", (event) => {
       changeCondition = event.detail.changeCondition;
       console.log("Received changeCondition in App.svelte:", changeCondition);
     });
-    document.addEventListener("next", nextLevel);
-
-    document.addEventListener("continueRealSurvey", () => {
-      step = 4;
-      currentLevel =1;
-    });
-     // When the Start button is pressed, hide Popup 1 and show Popup 2.
-     document.addEventListener("startPressed", () => {
-      if (step === 3) {
-      showPopup1 = false;
-      showPopup0=false
-      showPopup2 = true;
-      }
-    });
-    // When the red square is drawn (animation complete), hide Popup 2 and show Popup 3.
-    document.addEventListener("redSquareShown", () => {
-      if (step === 3) {
-        showPopup2 = false;
-        showPopup3 = true;
-      }
-    });
+    document.addEventListener("nextLevel", nextLevel);
+    document.addEventListener("nextStep", nextStep);
   });
-  $: console.log('stage is '+step+', level is: '+currentLevel)
+
+  $: console.log('stage is '+step+', level is: '+level)
+
 </script>
 
-<div class="max-y">
 <header class="header">
-  <h1>Master spørreskjema kartografi</h1>
+  <div class= "logo">Master spørreskjema kartografi NTNU</div>
+  <Progress {step} {level}  />
 </header>
 
-<main class="survey-layout">
+<main class="main-layout">
   <main>
     {#if step === 1}
       <Consent on:next={nextStep} />
     {:else if step === 2}
-      <Demographics onNext={nextStep} on:test={goToTestMode} />
-    {:else if step === 3}
-      <!-- Test Mode Page: Displays demo map and survey, with popups -->
-      <div class="test-banner">
-        <p>Dette er en demostrasjonsoppgave. Dataen vil ikke bli lagret.</p>
-      </div>
-
-      <div class="test-container" style="position: relative;">
-   
-        <!-- Render the popups (only when step 3) -->
-        {#if showPopup0}
-        <Popup
-          message="1.Les instruksjonen for oppgaven"
-          style="top: 0px; right: 7%; transform: translateX(-50%);"
-        
-        />
-        {/if}
-        {#if showPopup1}
-        <Popup
-          message="2. Trykk på <strong>Start</strong> for starte fargeskiftet. Obs: du kan bare starte én gang"
-          style="top: 530px; left: 49%; transform: translateX(-50%);"
-        
-        />
-        {/if}
-        {#if showPopup2}
-          <Popup
-            message="3. Etter fargeskiftet vil en <strong>rød ramme</strong> fremheve én region"
-            style="top: 70%; left: 0%; transform: translateY(-50%);"
-          />
-        {/if}
-        {#if showPopup3}
-        <Popup
-          message="4. Svar på de to spørsmålene angående farge-endringene."
-          style="bottom: 95px; right: 10px;"
-        />
-        {/if}
-        <div class="map-container">
-          <Map level={currentLevel} changeCondition={changeCondition} bind:originalColor />
-        </div>
-        <div class="survey-container">
-          <TestPage {step} on:next={nextStep} />
-        </div>
-      </div>
+      <Demographics onNext={nextStep}  />
+    {:else if step ===3 }
+      <TestFiller on:next={nextStep}/>
     {:else if step === 4}
-    <div class="main-container"  >
-      <div class="map-container">
-        <Map level={currentLevel} changeCondition={changeCondition} />
-      </div>
-      <div class="survey-container">
-        <Survey participantId={participantId} changeCondition={changeCondition} level={currentLevel} totalQuestions={totalQuestions} originalColor={originalColor} />
-      </div>
-    </div>
+    <MapSurveyTest  on:next={nextStep}/>
     {:else if step === 5}
-      <ThankYou />
+    <SurveyFiller on:next={nextStep}/>
+    {:else if step === 6}
+   <MapSurvey participantId={participantId} changeCondition={changeCondition} {level} totalQuestions={totalQuestions} />
+   {:else if step === 7}
+   <FinaleFiller {participantId} on:next={nextStep}/>
+   {:else if step === 8}
+    <ThankYou  />
     {/if}
   </main>
 </main>
@@ -158,4 +81,3 @@
   <p>© 2025 </p>
 </footer>
 
-</div>

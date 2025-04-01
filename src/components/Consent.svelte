@@ -7,6 +7,7 @@
     }
   </script>
   <div class="modal">
+    
     <div class="modal-content">
       <h2>Samtykkeskjema</h2>
       <p>
