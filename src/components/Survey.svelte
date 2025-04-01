@@ -91,6 +91,7 @@
       })
         .then(response => response.json())
         .then(result => {
+          console.log("Full response:", result);
           console.log("Response submitted:", result.message);
           submitted = true;
           setTimeout(() => {
