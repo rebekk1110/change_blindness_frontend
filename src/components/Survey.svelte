@@ -23,10 +23,8 @@
   onMount(() => {
 
     if (demoMode) {
-      console.log("Det er DEMOMODE!");
       document.addEventListener("redSquareShown", () => {
         showSurvey = true;
-        console.log("redSquareShown event received: survey is now shown");
       });
     }
 /*     else{
@@ -70,7 +68,6 @@
       console.log("Demo mode: simulated submission", data);
       setTimeout(() => {
         submitted = true;
-        console.log("⏳ Resetting button (demo mode)...");
         setTimeout(() => {
           submitted = false;
           // Reset fields for next level
@@ -80,7 +77,6 @@
           color_confidence = "";
           // Dispatch next event to signal the parent to move on
           document.dispatchEvent(new CustomEvent("nextStep"));
-          console.log("nå er vi på noe nytt")
         }, 500);
       }, 1000);
     } else {
@@ -88,9 +84,11 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
+        
       })
         .then(response => response.json())
         .then(result => {
+          console.log("Data: ", data);
           console.log("Full response:", result);
           console.log("Response submitted:", result.message);
           submitted = true;
@@ -232,7 +230,7 @@
     
     <div class="submit-container">
       <button class="submit-btn" on:click={submitAndNext} disabled={submitted}>
-        {#if submitted}
+        {#if submitted && !demoMode}
           <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>

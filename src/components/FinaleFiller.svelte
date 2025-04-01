@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
+
     export let participantId;
     let effort = "";
     let feedback = "";
@@ -20,9 +21,10 @@
         .then(response => response.json())
         .then(data => {
           console.log("Final data submitted:", data.message);
+          dispatch("next")
           // Optionally, you could redirect or show an additional message here.
         })
-        dispatch("next")
+       
         .catch(error => {
           console.error("Error submitting final data:", error);
         });

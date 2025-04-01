@@ -220,14 +220,16 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
 }
-
+input::placeholder {
+  color: #999898;
+}
 input, select {
   width: 95%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  color: #999898;
+  color: #555;
 }
 .button-class{
   align-items: end;
