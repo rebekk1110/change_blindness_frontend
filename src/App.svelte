@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import Consent from "./components/Consent.svelte";
-  import Demographics from "./components/Demographics.svelte";
+  import Intro from "./components/Intro.svelte";
   import ThankYou from "./components/Thankyou.svelte";
   import TestFiller from "./components/TestFiller.svelte";
   import MapSurveyTest from "./components/MapSurveyTest.svelte"
@@ -10,7 +10,7 @@
   import SurveyFiller from "./components/SurveyFiller.svelte";
   import FinaleFiller from "./components/FinaleFiller.svelte";
 
-  let step = 1;  // Step tracker
+  let step = 4;  // Step tracker
   let level= 1;
   let totalQuestions = 3;
   let participantId;
@@ -60,7 +60,7 @@
     {#if step === 1}
       <Consent on:next={nextStep} />
     {:else if step === 2}
-      <Demographics onNext={nextStep}  />
+      <Intro onNext={nextStep}  />
     {:else if step ===3 }
       <TestFiller on:next={nextStep}/>
     {:else if step === 4}

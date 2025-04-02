@@ -19,6 +19,7 @@ margin: 20px;
 
 
 .test-container{
+
 display: flex;
 justify-content: center;
 margin: 0;
@@ -27,18 +28,19 @@ flex-direction: row;
 gap: 10px; 
 column-gap: 5%;
 width: 100%;
-margin: 0 20px;
+margin-top: 5px;
+margin-bottom: 30px;
 }
 
 .test-banner{
 justify-content: center;
-padding: 10px;
-background: #e6c5c3;
+padding: 5px;
+background: #edc36a52;
 text-align: center;
 margin-top: 10px;
 border-radius: 6px;
 font-size: 13px;
-color: #441311
+color: #512c019a
 }
 /*
 .test-container{

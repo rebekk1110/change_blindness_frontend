@@ -9,8 +9,8 @@
   
   <div class="filler-container">
     <div class="filler-card">
-      <h2>Velkommen til demonstrasjonen</h2>
-      <p> I denne oppgaven vil du få en kort veiledning som forklarer hvordan du skal gjennomføre eksperimentet. Trykk på «Fortsett» for å starte demonstrasjonen.</p>
+      <h2>Velkommen til øvelse-oppgave</h2>
+      <p> Nå skal du få en prøve-oppgave som forklarer hvordan du skal gjennomføre eksperimentet. Trykk på «Fortsett» for å starte prøve-oppgaven.</p>
       <p class="warning-text">
         ⚠ Husk <strong>ikke refresh sidene</strong> underveis i spørreskjema, da starter studien på nytt.
       </p>

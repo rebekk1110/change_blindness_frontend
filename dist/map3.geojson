@@ -18515,7 +18515,7 @@
         "id": "ROSV",
         "name": "Suceava",
         "changing": true,
-        "mainFeature": true,
+        "mainFeature": false,
         "color_id": 2
       },
       "id": 17
@@ -25014,7 +25014,7 @@
         "id": "ROSJ",
         "name": "Salaj",
         "changing": false,
-        "mainFeature": false,
+        "mainFeature": true,
         "color_id": 3
       },
       "id": 22

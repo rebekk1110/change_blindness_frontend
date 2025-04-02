@@ -60,7 +60,7 @@
     </div>
     
     <div class="card">
-      <p class="question-text">Vi setter også pris på dine kommentarer om studien:</p>
+      <p class="question-text">Dersom du har kommentarer til studien, vil vi sette pris på å høre dem</p>
       <textarea bind:value={feedback} placeholder="Skriv din tilbakemelding her..." rows="4"></textarea>
     </div>
     

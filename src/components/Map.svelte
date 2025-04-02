@@ -6,6 +6,7 @@
   export let level;
   export let changeCondition;
   export let originalColor;
+  export let showPopup1;
 
   let map, geojsonLayer, geojsonLayerDemo;
   let changingLayers = [];
@@ -13,9 +14,40 @@
   let countdown = 3;
   let showCountdown = false;
   let animationStarted = false;
-  
+
+  function startCountdown() {
+    if (animationStarted) {
+        console.warn("⚠ Animation already started, ignoring click.");
+        return;
+    }
+        
+    animationStarted = true;
+    showCountdown = true;
+    document.dispatchEvent(new CustomEvent("startPressed"));
+
+    let interval = setInterval(() => {
+        
+        if (countdown > 1) {
+            countdown -= 1;
+        } else {
+            clearInterval(interval);
+            showCountdown = false;
+            startColorChange();
+        }
+    }, 1000);
+  }
+
+  function handleButtonClick() {
+    if (animationStarted) {
+      alert("Animasjonen kan kun spilles av en gang.");
+    } else {
+      console.log("🟢 Start Animation button clicked!"); 
+      startCountdown();
+    }
+  }
+
   function getColor(color_id) {
-    return color_id === 1 ? "#D3D3D3" : color_id === 2 ? "#A9A9A9" : "#696969";
+    return color_id === 1 ? "#DADADA" : color_id === 2 ? "#A0A0A0" : "#606060";
   }
   function getGeoJSONUrl(level) {
     return `${import.meta.env.BASE_URL}map${level}.geojson`;
@@ -50,30 +82,10 @@
     requestAnimationFrame(step);
   }
   function getRandomGrayColor(excludeColor) {
-    const grayColors = ["#D3D3D3", "#A9A9A9", "#696969"];
+    const grayColors = ["#DADADA", "#A0A0A0", "#606060"];
     return grayColors.filter(color => color !== excludeColor)[Math.floor(Math.random() * 2)];
   }
-  function startCountdown() {
-    if (animationStarted) {
-        console.warn("⚠ Animation already started, ignoring click.");
-        return;
-    }
-        
-    animationStarted = true;
-    showCountdown = true;
-    document.dispatchEvent(new CustomEvent("startPressed"));
 
-    let interval = setInterval(() => {
-        
-        if (countdown > 1) {
-            countdown -= 1;
-        } else {
-            clearInterval(interval);
-            showCountdown = false;
-            startColorChange();
-        }
-    }, 1000);
-  }
   function startColorChange() {
   if (changingLayers.length === 0) {
     console.warn("⚠ No changing features found!");
@@ -104,7 +116,8 @@
           fillColor: getColor(feature.properties.color_id),
           weight: 1,
           color: "white",
-          fillOpacity: feature.properties.changing ? 1.0 : 0.9
+          fillOpacity:1.0
+          //fillOpacity: feature.properties.changing ? 1.0 : 0.9
         }),
         onEachFeature: function (feature, layer) {
           if (feature.properties.changing) {
@@ -163,10 +176,18 @@
         `;
         return div;
       };
+
       legendControl.addTo(map);
+    
+
 
 
 });
+
+
+
+
+
 
 
   $: console.log("Map level prop is:", level);
@@ -192,16 +213,16 @@
       ⚠ <strong>Ikke refresh siden</strong>, da starter studien på nytt.
     </p>
   </div> -->
+  {#if !showPopup1}
+  <button 
+    class="start-animation-btn {animationStarted ? 'disabled' : ''}" 
+    on:click={handleButtonClick}
+    title={animationStarted ? "Animasjonen kan kun spilles av en gang." : ""}
+  >
+    {animationStarted ? "Klasse-skifte ferdig" : "Start animasjon"}
+  </button>
+{/if}
 
-
-  <button class="start-animation-btn" 
-  on:click={() => {
-      console.log("🟢 Start Animation button clicked!"); 
-      startCountdown();
-  }} 
-  disabled={animationStarted}>
-   {animationStarted ? "Fargeskifte ferdig" : "Start animasjon"}
-</button>
 </div>
 
 <style>
@@ -270,6 +291,24 @@
   }
 
   .start-animation-btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  .start-animation-btn {
+    margin-bottom: 10px;
+    margin-top: 6px;
+    padding: 10px 15px;
+    z-index: 10;  
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s;
+  }
+
+  .start-animation-btn.disabled {
     background-color: gray;
     cursor: not-allowed;
   }

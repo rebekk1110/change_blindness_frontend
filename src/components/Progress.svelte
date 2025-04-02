@@ -2,7 +2,7 @@
   export let step; // 0-basert indeks for nåværende steg
   export let level;
 
- let stepsList= ["Registrering", "Demo", "Oppgave 1", "Oppgave 2",  "Oppgave 3","Ferdig"];
+ let stepsList= ["Registrering", "Øvelse", "Oppgave 1", "Oppgave 2",  "Oppgave 3","Ferdig"];
 
 
  $: currentProgressIndex = (() => {

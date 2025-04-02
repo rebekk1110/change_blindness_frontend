@@ -7,12 +7,15 @@
   export let originalColor;
   export let demoMode = false;
 
+
   // For the change condition question
   let change_response = "";      // "Change" or "No Change"
   let change_confidence = ""; 
   let color_confidence = "";  // Scale values as a string (e.g., "5")
   let color_response = "";       
   let submitted = false;
+
+  let redSquareShownTime = 0;
 
   const dispatch = createEventDispatcher();
 
@@ -26,17 +29,20 @@
       document.addEventListener("redSquareShown", () => {
         showSurvey = true;
       });
-    }
-/*     else{
-      console.log("Det er ikke DEMOMODE!");
 
-    } */
+    }
+    else {
+      document.addEventListener("redSquareShown", () => {
+        redSquareShownTime = performance.now();
+      });
+    }
+
   });
   
   function submitAndNext() {
     // Validate first question
     if (!change_response) {
-      alert("🚨 Vennligst svar på om regionen endret farge.");
+      alert("🚨 Vennligst svar på om regionen endret klasse.");
       return;
     }
     if (!change_confidence) {
@@ -45,23 +51,28 @@
     }
     // If the answer is "Change", ensure the original color is selected
     if (change_response === "Change" && !color_response) {
-      alert("🚨 Vennligst velg den opprinnelige fargen.");
+      alert("🚨 Vennligst velg den opprinnelige klassen.");
       return;
     }
 
-    
-    // Build payload for the change response:
+    let reactionTime = 0;
+    if (redSquareShownTime) {
+      reactionTime = performance.now() - redSquareShownTime;
+    }
+
+
     const data = {
       participant_id: participantId,
       question_id: `Q${level}`, // Single question ID for this level.
       change_response: change_response,
       change_condition: changeCondition,
       change_confidence: parseInt(change_confidence),
-      reaction_time: 0, // Replace with measured reaction time if available.
+      reaction_time: demoMode ? 0 : reactionTime,
       // For color fields, only include values if the answer is "Change".
       original_color: change_response === "Change" ? originalColor : null,
       color_response: change_response === "Change" ? color_response : "",
       color_confidence: change_response === "Change" ? parseInt(color_confidence) : 0
+      
     };
 
     if (demoMode) {
@@ -130,7 +141,7 @@
 <div class="content-wrapper">
   <div class="survey-container">
     {#if demoMode === true}
-    <p class="progress-text">Demoppgave</p>
+    <p class="progress-text">Prøve-oppgave</p>
      {:else}
     <p class="progress-text">Oppgave {level} av {totalQuestions}</p>
      {/if}
@@ -139,7 +150,7 @@
         Observer kartet til venstre.
         Når animasjonen starter vil noen regioner <strong>skifte klasse</strong> (farge).  
         <br>
-       Etter animasjonen vil en <strong>rød ramme</strong> fremheve én region.   
+       Etter animasjonen vil en <strong>rød ramme</strong> fremheve én region. Du skal da svare på om akkuratt denne regionen har skiftet klasse.
       </p>
     </div>
     {#if showSurvey}
@@ -184,25 +195,25 @@
     <!-- Question Box 2: Original Color & Confidence (only if answer is "Change") -->
     {#if change_response === "Change"}
       <div class="question-box">
-        <p class="question-text">Hva var den opprinnelige fargen på regionen?</p>
+        <p class="question-text">Hva var den opprinnelige klassen på regionen?</p>
         <div class="color-options">
           <label class="color-option {color_response === '#D3D3D3' ? 'selected' : ''}">
             <input type="radio" bind:group={color_response} value="#D3D3D3" required hidden />
             <span class="color-swatch" style="background-color: #D3D3D3;"></span>
-            <span class="color-name">Lys grå</span>
+            <span class="color-name">Lav</span>
           </label>
           <label class="color-option {color_response === '#A9A9A9' ? 'selected' : ''}">
             <input type="radio" bind:group={color_response} value="#A9A9A9" required hidden />
             <span class="color-swatch" style="background-color: #A9A9A9;"></span>
-            <span class="color-name">Middels grå</span>
+            <span class="color-name">Medium</span>
           </label>
           <label class="color-option {color_response === '#696969' ? 'selected' : ''}">
             <input type="radio" bind:group={color_response} value="#696969" required hidden />
             <span class="color-swatch" style="background-color: #696969;"></span>
-            <span class="color-name">Mørk grå</span>
+            <span class="color-name">Høy</span>
           </label>
         </div>
-        <p class="confidence-question">Hvor sikker er du på fargevalget ditt?</p>
+        <p class="confidence-question">Hvor sikker er du på valget ditt?</p>
         <div class="confidence-options">
           <label class="option">
             <input type="radio" bind:group={color_confidence} value="5" required />
@@ -270,7 +281,7 @@
   .color-swatch {
     display: block;
     width: 50px;
-    height: 50px;
+    height: 30px;
     border: 2px solid transparent;
     margin: 0 auto 5px;
     border-radius: 6px;
