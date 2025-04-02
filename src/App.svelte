@@ -10,7 +10,7 @@
   import SurveyFiller from "./components/SurveyFiller.svelte";
   import FinaleFiller from "./components/FinaleFiller.svelte";
 
-  let step = 4;  // Step tracker
+  let step = 1;  // Step tracker
   let level= 1;
   let totalQuestions = 3;
   let participantId;
