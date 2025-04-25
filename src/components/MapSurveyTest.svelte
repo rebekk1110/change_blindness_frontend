@@ -58,7 +58,7 @@
 {/if}
 
   {#if showPopup2}
-    <Popup message="2. Klikk på <strong>Start</strong> animasjon. <br> Obs: Animasjonen kan kun startes én gang" style="top: 580px; left: 15%; transform: translateX(-50%);">
+    <Popup message="2. Klikk på <strong>Start</strong> animasjon. <br> Obs: Animasjonen kan kun startes én gang" style="top: 630px; left: 15%; transform: translateX(-50%);">
       <!-- "Next" button inside popup1 -->
       
     </Popup>
@@ -79,7 +79,7 @@
 <style>
 
  .map-container{
-  margin-bottom: 20px;
+  margin-bottom: 40px;
  }
  .popup-footer {
     display: flex;

@@ -68,7 +68,7 @@
     {:else if step === 5}
     <SurveyFiller on:next={nextStep}/>
     {:else if step === 6}
-   <MapSurvey participantId={participantId} changeCondition={changeCondition} {level} totalQuestions={totalQuestions} />
+   <MapSurvey participantId={participantId} {level} totalQuestions={totalQuestions} />
    {:else if step === 7}
    <FinaleFiller {participantId} on:next={nextStep}/>
    {:else if step === 8}
