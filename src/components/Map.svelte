@@ -41,7 +41,7 @@
     if (animationStarted) {
       alert("Animasjonen kan kun spilles av en gang.");
     } else {
-      console.log("🟢 Start Animation button clicked!"); 
+      console.log("The change condition", changeCondition); 
       startCountdown();
     }
   }

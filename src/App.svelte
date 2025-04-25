@@ -14,7 +14,7 @@
   let level= 1;
   let totalQuestions = 3;
   let participantId;
-  let changeCondition = "No change";
+  let changeCondition ;
   let originalColor; 
 
   
@@ -26,10 +26,7 @@
   }
 
   function nextLevel(event) {
-    if (event.detail && event.detail.changeCondition !== undefined) {
-      changeCondition = event.detail.changeCondition;
-      console.log("Received changeCondition in App.svelte:", changeCondition);
-     return; }
+
     if (level < totalQuestions) {
       level++; } 
     else{
@@ -38,10 +35,10 @@
   }
 
   onMount(() => {
-    document.addEventListener("updateChangeCondition", (event) => {
+/*     document.addEventListener("updateChangeCondition", (event) => {
       changeCondition = event.detail.changeCondition;
       console.log("Received changeCondition in App.svelte:", changeCondition);
-    });
+    }); */
     document.addEventListener("nextLevel", nextLevel);
     document.addEventListener("nextStep", nextStep);
   });
@@ -68,7 +65,7 @@
     {:else if step === 5}
     <SurveyFiller on:next={nextStep}/>
     {:else if step === 6}
-   <MapSurvey participantId={participantId} {level} totalQuestions={totalQuestions} />
+   <MapSurvey participantId={participantId} {level} totalQuestions={totalQuestions}  />
    {:else if step === 7}
    <FinaleFiller {participantId} on:next={nextStep}/>
    {:else if step === 8}
