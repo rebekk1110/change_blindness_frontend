@@ -141,7 +141,7 @@
 <div class="content-wrapper">
   <div class="survey-container">
     {#if demoMode === true}
-    <p class="progress-text">Prøve-oppgave</p>
+    <p class="progress-text">Øve-oppgave</p>
      {:else}
     <p class="progress-text">Oppgave {level} av {totalQuestions}</p>
      {/if}

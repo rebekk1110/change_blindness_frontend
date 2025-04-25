@@ -120,17 +120,30 @@
           //fillOpacity: feature.properties.changing ? 1.0 : 0.9
         }),
         onEachFeature: function (feature, layer) {
-          if (feature.properties.changing) {
-            changingLayers.push({ 
-              layer, 
-              startColor: getColor(feature.properties.color_id),
-              endColor: getRandomGrayColor(getColor(feature.properties.color_id))
-            });
-          }
-          // When a feature is marked as the main feature, update originalColor.
-          if (feature.properties.mainFeature) {
+          const isMain = feature.properties.mainFeature;
+          const isChanging = feature.properties.changing;
+          const color = getColor(feature.properties.color_id);
+
+          // Store reference if it's the main feature
+          if (isMain) {
             mainFeatureLayer = layer;
-            originalColor = getColor(feature.properties.color_id);
+            originalColor = color;
+
+            // Only make it change if the condition is "Change"
+            if (changeCondition === "Change") {
+              changingLayers.push({
+                layer,
+                startColor: color,
+                endColor: getRandomGrayColor(color)
+              });
+            }
+          } else if (isChanging) {
+            // For non-main features, use the 'changing' property as usual
+            changingLayers.push({
+              layer,
+              startColor: color,
+              endColor: getRandomGrayColor(color)
+            });
           }
         }
       }).addTo(map);

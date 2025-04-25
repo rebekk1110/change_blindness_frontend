@@ -44,13 +44,15 @@
       <!-- Left Section: Intro & Description -->
       <div class="left-section">
         <div class="intro-section">
-          <h1>Velkommen til kart-animasjon eksperimentet</h1>
+          <h1>Velkommen til kartanimasjon-eksperimentet</h1>
           <p>
             <!-- Takk for at du deltar til denne kartstudien for for min masteroppgave. <br> -->
-            Dette eksperimentet tar <strong>ca. 3- 4 minutter</strong> og består av  <strong>3 like oppgaver</strong> med økende vanskelighetsnivå. Du vil få en prøve-oppgave først for å forstå hvordan oppgaven funker.
-            <br>
-            <br>
-            Vi tester din evne til å oppdage endringer i animerte kart. Lykke til - din innsats er verdifull!
+            Dette eksperimentet tar <strong>ca. 3- 4 minutter</strong> og består av  <strong>3 like oppgaver</strong> med økende vanskelighetsnivå. Du får først en <strong>øveoppgave</strong> slik at du kan bli kjent med hvordan oppgaven fungerer. 
+            
+             Eksperimentet undersøker hvordan endringer
+              oppfattes i animerte kart. 
+            
+            Lykke til - din innsats er verdifull!
           </p>
        <!--    <h3>Instruksjoner</h3>
           <p>
@@ -77,7 +79,13 @@
 
             <div class="form-group age">
               <label for="age">Alder</label>
-              <input id="age" type="number" bind:value={age} min="1" placeholder="Skriv din alder" />
+              <select id="age" bind:value={age}>
+                <option value="">Velg din aldersgruppe</option>
+                <option value="18-25">18–25 år</option>
+                <option value="26-40">26–40 år</option>
+                <option value="41-65">41–65 år</option>
+                <option value="65+">65 år eller eldre</option>
+              </select>
             </div>
 
             <div class="form-group">
@@ -85,18 +93,20 @@
               <select id="education" bind:value={education}>
                 <option value="">Velg...</option>
                 <option value="high-school">VGS</option>
-                <option value="bachelor">Bachelor</option>
-                <option value="master">Master</option>
+                <option value="bachelor">Bachelorgrad</option>
+                <option value="master">Mastergrad</option>
                 <option value="phd">PhD</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="experience"> Studerer du eller jobber med kart?</label>
+              <label for="experience"> Kart-erfaring</label>
               <select id="experience" bind:value={experience}>
                 <option value="">Velg...</option>
-                <option value="yes">Ja</option>
-                <option value="no">Nei</option>
+                <option value="lite-erfaring"> Ingen eller liten erfaring (Bruker kart sjelden) </option>
+                <option value="moderat-erfaring"> Moderat erfaring (Bruker kart jevnlig)</option>
+                <option value="ekspert">Ekspert (Faglig kunnskap om kart gjennom jobb eller studie)</option>
+                
               </select>
             </div>
          
@@ -161,12 +171,11 @@
     flex: 1;
     min-width: 360px;
     max-width: 440px;
-  
 }
 
 .intro-section {
     background: #ffffff;
-    padding: 30px;
+    padding:  1.6em 2em;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
@@ -175,14 +184,16 @@
 
 
 .intro-section h1 {
-    font-size: 28px;
+    font-size: 24px;
     color: #333;
     margin-bottom: 15px;
 }
 
 .intro-section p {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.3;
+    white-space: pre-line;
+
     color: #555;
 }
 /* Survey Form */
@@ -201,7 +212,6 @@
   justify-content: space-between; 
   align-items: center;
   width: 100%;
-
 }
 
 .form-group {

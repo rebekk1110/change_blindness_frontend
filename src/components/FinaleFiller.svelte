@@ -60,7 +60,7 @@
     </div>
     
     <div class="card">
-      <p class="question-text">Dersom du har kommentarer til studien, vil vi sette pris på å høre dem</p>
+      <p class="question-text">Dersom du har kommentarer til studien, setter vi pris på å høre dem</p>
       <textarea bind:value={feedback} placeholder="Skriv din tilbakemelding her..." rows="4"></textarea>
     </div>
     
@@ -84,19 +84,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
-  
-    h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    
-    .intro-text {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 30px;
-    }
-  
+
     .card {
       background: #fafafa;
       padding: 20px;
@@ -110,9 +98,9 @@
      
     }
     .question-text {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 18px;
       color: #333;
     }
     

@@ -10,7 +10,7 @@
   <div class="filler-container">
     <div class="filler-card">
       <h2>Velkommen til eksperimentet</h2>
-      <p>Takk for at du at du gjennomførte prøve-oppgaven. Nå er du klar for å starte eksperimentet med <strong>3 like oppgaver</strong> med økende vanskelighetsnivå. Trykk på «Fortsett» for å starte på første oppgave.</p>
+      <p>Takk for at du at du gjennomførte øve-oppgaven. Nå er du klar for å starte eksperimentet med <strong>3 like oppgaver</strong> med økende vanskelighetsnivå. <br> Trykk på «Fortsett» for å starte på første oppgave.</p>
       <p class="warning-text">
         ⚠ Husk <strong>ikke refresh sidene</strong> underveis i spørreskjema, da starter studien på nytt.
       </p>
