@@ -11,6 +11,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+select, input, textarea {
+  background-color: white;
+  color: #3f3f3f;
+}
+
+
+
 
 body {
 

@@ -17,8 +17,7 @@
   <div class="main-container"  >
 
     <div class="map-container">
-      <Map {level}  bind:originalColor 
-      on:next={(e) => changeCondition = e.detail.changeCondition}/>
+      <Map {level}  bind:originalColor bind:changeCondition  />
     </div>
     <div class="survey-container">
       <Survey participantId={participantId} {changeCondition} {level} {totalQuestions} {originalColor}  demoMode={false}  />

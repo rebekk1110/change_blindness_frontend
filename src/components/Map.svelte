@@ -159,16 +159,12 @@
     const bounds = layer.getBounds();
     L.rectangle(bounds, { color: "#FF0000", weight: 2, fillOpacity: 0 }).addTo(map);
   }
-  
+
+
   onMount(() => {
     map = L.map("map", { zoomControl: false, attributionControl: false }).setView([0, 0], 2);
     loadGeoJSON(level);
     
-    changeCondition = Math.random() < 0.5 ? "Change" : "No change";  
-    console.log("Assigned change condition:", changeCondition);
-    //dispatch('next', { changeCondition });  // Emit changeCondition to Survey.svelte
-    document.dispatchEvent(new CustomEvent('next', { detail: { changeCondition } }));
-
     document.addEventListener("resetAnimation", () => {
         animationStarted = false;
         showCountdown = false;
@@ -176,7 +172,6 @@
       
     });
   
-      // Create and add the legend control in the top left corner
       const legendControl = L.control({ position: 'topleft' });
       legendControl.onAdd = function(map) {
         // Create a container for the legend (Leaflet will append this container inside the map)
@@ -189,20 +184,15 @@
         `;
         return div;
       };
-
       legendControl.addTo(map);
-    
-
-
-
 });
-
-
-
-
-
-
-
+  
+$: if (level) {
+    changeCondition = Math.random() < 0.5 ? "Change" : "No change";
+    console.log("🎲 New random change condition:", changeCondition);
+    document.dispatchEvent(new CustomEvent('next', { detail: { changeCondition } }));
+    loadGeoJSON(level);
+  }
   $: console.log("Map level prop is:", level);
   $:  loadGeoJSON(level);
 
@@ -232,7 +222,7 @@
     on:click={handleButtonClick}
     title={animationStarted ? "Animasjonen kan kun spilles av en gang." : ""}
   >
-    {animationStarted ? "Klasse-skifte ferdig" : "Start animasjon"}
+    {animationStarted ? "Animasjon ferdig" : "Start animasjon"}
   </button>
 {/if}
 

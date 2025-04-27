@@ -7,6 +7,9 @@
   let age = "";
   let experience = "";
   let consent = true;
+
+
+  
   
   async function submitDemographics() {
     // Validate that all fields are filled
@@ -49,8 +52,7 @@
             <!-- Takk for at du deltar til denne kartstudien for for min masteroppgave. <br> -->
             Dette eksperimentet tar <strong>ca. 3- 4 minutter</strong> og består av  <strong>3 like oppgaver</strong> med økende vanskelighetsnivå. Du får først en <strong>øveoppgave</strong> slik at du kan bli kjent med hvordan oppgaven fungerer. 
             
-             Eksperimentet undersøker hvordan endringer
-              oppfattes i animerte kart. 
+            Eksperimentet tester hvordan endringer i animasjonskart oppdages og tolkes.
             
             Lykke til - din innsats er verdifull!
           </p>
