@@ -12349,7 +12349,7 @@
         "id": "BIGI4",
         "name": "Gitega",
         "changing": false,
-        "mainFeature": false,
+        "mainFeature": true,
         "color_id": 3
       },
       "geometry": {
@@ -24435,7 +24435,7 @@
         "id": "BIKI2",
         "name": "Kirundo",
         "changing": false,
-        "mainFeature": true,
+        "mainFeature": false,
         "color_id": 3
       },
       "geometry": {
@@ -65830,7 +65830,7 @@
         "name": "Rutana",
         "changing": false,
         "mainFeature": false,
-        "color_id": 1
+        "color_id": 2
       },
       "geometry": {
         "type": "Polygon",
