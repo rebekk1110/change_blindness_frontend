@@ -21279,7 +21279,7 @@
         "id": "ROGL",
         "name": "Galati",
         "changing": false,
-        "mainFeature": true,
+        "mainFeature": false,
         "color_id": 3
       },
       "geometry": {
@@ -25211,7 +25211,7 @@
         "id": "ROHD",
         "name": "Hunedoara",
         "changing": false,
-        "mainFeature": false,
+        "mainFeature": true,
         "color_id": 2
       },
       "geometry": {
@@ -27083,7 +27083,7 @@
         "id": "ROBZ",
         "name": "Buzau",
         "changing": true,
-        "mainFeature": true,
+        "mainFeature": false,
         "color_id": 1
       },
       "geometry": {

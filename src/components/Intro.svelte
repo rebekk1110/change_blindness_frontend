@@ -91,7 +91,7 @@
             </div>
 
             <div class="form-group">
-              <label for="education">Høyeste utdanningsnivå</label>
+              <label for="education">Høyeste fullførte eller pågående utdanningsnivå</label>
               <select id="education" bind:value={education}>
                 <option value="">Velg...</option>
                 <option value="high-school">VGS</option>

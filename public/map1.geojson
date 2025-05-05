@@ -3116,7 +3116,7 @@
         "name": "Southern",
         "changing": false,
         "mainFeature": false,
-        "color_id": 3
+        "color_id": 2
       },
       "geometry": {
         "type": "Polygon",
